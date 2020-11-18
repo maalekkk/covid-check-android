@@ -1,0 +1,18 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.CVD" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/electric_violet</item>
+        <item name="colorPrimaryVariant">@color/purple</item>
+        <item name="colorOnPrimary">@color/purple</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/robins_egg_blue</item>
+        <item name="colorSecondaryVariant">@color/teal</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/mine_shaft</item>
+        <item name="color">@color/black</item>
+        <item name="android:windowBackground">@drawable/new_login_gradients</item>
+        <item name="fontFamily">@font/lato_regular</item>
+    </style>
+</resources>

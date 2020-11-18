@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Covid Check</string>
+    <string name="usernameReg">Username</string>
+    <string name="emailReg">Email</string>
+    <string name="passwordReg">Password</string>
+    <string name="sign_upReg">Sign up</string>
+    <string name="sign_inLog">Sign in</string>
+    <string name="signin_redirect">Already a member? Sign in!</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="signup_redirect">Don\'t have an account? Register here!</string>
+    <string name="sign_in_description">Sign in text on registration activity</string>
+    <string name="join_us_description">Join us text on registration activity</string>
+    <string name="reset_password_instruction">You will receive an email with instructions on resetting password.</string>
+    <string name="reset_password">Reset password</string>
+    <string name="go_back_to_sign_in">Go back to Sign In.</string>
+    <string name="password_reset_description">Password reset text on reset password activity</string>
+    <string name="your_recent_locations">Your recent locations:</string>
+    <string name="show_statistics">Show statistics</string>
+    <string name="add_location">Add location</string>
+    <string name="bottom_wave">bottom_wave</string>
+    <string name="person_profile">person_profile</string>
+    <string name="top_wave">top_wave</string>
+    <string name="location_icon">location_icon</string>
+    <string name="statistics_icon">statistics_icon</string>
+    <string name="infection_status">Infection status</string>
+    <string name="logo">logo</string>
+    <string name="go_back_to_main">Go back to main activity</string>
+
+
+</resources>

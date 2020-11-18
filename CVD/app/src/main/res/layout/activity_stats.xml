@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/wave2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitStart"
+        android:src="@drawable/ic_wave2"
+        android:contentDescription="@string/top_wave" />
+
+    <ImageView
+        android:id="@+id/person_profile_img"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        app:srcCompat="@drawable/person_white"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/person_profile" />
+
+    <ImageView
+        android:id="@+id/go_back_img"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        app:srcCompat="@drawable/ic_back_track"
+        android:layout_alignParentStart="true"
+        app:tint="@color/white"
+        android:contentDescription="@string/go_back_to_main" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_below="@id/person_profile_img"
+        android:layout_marginTop="100dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:paddingBottom="20dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.70"
+            android:fillViewport="true"
+            tools:ignore="UselessParent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="0.45"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/left_tile_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="13dp"
+                        android:background="@drawable/round_bg_layout">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Covid cases"
+                            android:textColor="#BCBCBC"/>
+
+                        <TextView
+                            android:id="@+id/left_tile_1_txt"
+                            android:textSize="30sp"
+                            android:textColor="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="51.3M" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/left_tile_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="13dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/round_bg_layout">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Covid deaths"
+                            android:textColor="#BCBCBC"/>
+
+                        <TextView
+                            android:id="@+id/left_tile_2_txt"
+                            android:textSize="30sp"
+                            android:textColor="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="1.3M" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="+12.3% of targets"
+                            android:textColor="#BCBCBC" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/c1" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/left_tile_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="10dp"
+                        android:padding="13dp"
+                        android:background="@drawable/round_bg_layout">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Covid deaths"
+                            android:textColor="#BCBCBC" />
+
+                        <TextView
+                            android:id="@+id/left_tile_3_txt"
+                            android:textSize="30sp"
+                            android:textColor="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="1.3M" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="+22% of target"
+                            android:textColor="#BCBCBC" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/c2"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/left_tile_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="10dp"
+                        android:padding="13dp"
+                        android:background="@drawable/round_bg_layout">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Covid cases"
+                            android:textColor="#BCBCBC" />
+
+                        <TextView
+                            android:id="@+id/left_tile_4_txt"
+                            android:textSize="30sp"
+                            android:textColor="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="51.3M" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="0.45"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/right_tile_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="13dp"
+                        android:background="@drawable/round_bg_layout">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Covid deaths"
+                            android:textColor="#BCBCBC" />
+
+                        <TextView
+                            android:id="@+id/right_tile_1_txt"
+                            android:textSize="30sp"
+                            android:textColor="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="1.3M" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="+22% of target"
+                            android:textColor="#BCBCBC" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/c2"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/right_tile_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="10dp"
+                        android:padding="13dp"
+                        android:background="@drawable/round_bg_layout">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Covid cases"
+                            android:textColor="#BCBCBC" />
+
+                        <TextView
+                            android:id="@+id/right_tile_2_txt"
+                            android:textSize="30sp"
+                            android:textColor="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="51.3M" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/right_tile_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="13dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/round_bg_layout">
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Covid deaths"
+                            android:textColor="#BCBCBC" />
+
+                        <TextView
+                            android:id="@+id/right_tile_3_txt"
+                            android:textSize="30sp"
+                            android:textColor="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="1.3M" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="+12.3% of targets"
+                            android:textColor="#BCBCBC"  />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/c1" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/right_tile_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="10dp"
+                        android:padding="13dp"
+                        android:background="@drawable/round_bg_layout">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#BCBCBC"
+                            android:text="Covid cases"/>
+
+                        <TextView
+                            android:id="@+id/right_tile_4_txt"
+                            android:textSize="30sp"
+                            android:textColor="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="51.3M" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/right_tile_5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="13dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/round_bg_layout">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#BCBCBC"
+                            android:text="Covid deaths" />
+
+                        <TextView
+                            android:id="@+id/right_tile_5_txt"
+                            android:textSize="30sp"
+                            android:textColor="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="1.3M" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#BCBCBC"
+                            android:text="+12.3% of targets" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/c1" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+</RelativeLayout>

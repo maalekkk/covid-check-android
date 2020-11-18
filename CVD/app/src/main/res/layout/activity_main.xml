@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/new_login_gradients">
+
+    <ImageView
+        android:id="@+id/wave_top_img"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:scaleType="fitStart"
+        android:src="@drawable/ic_wave2"
+        android:contentDescription="@string/top_wave" />
+
+    <ImageView
+        android:id="@+id/person_profile_img"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        app:srcCompat="@drawable/person_account"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/person_profile" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/person_profile_img"
+        android:layout_above="@id/linear_lay_buttons_bottom"
+        android:layout_marginBottom="70dp"
+        android:orientation="vertical"
+        android:layout_marginTop="60dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/your_recent_locations"
+            android:layout_marginStart="56dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/white" />
+
+        <ListView
+            android:id="@+id/recent_locations_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="40dp"
+            android:scrollbarSize="3dp"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/wave_bottom_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-40dp"
+        android:src="@drawable/ic_wave1"
+        android:contentDescription="@string/bottom_wave" />
+
+    <LinearLayout
+        android:id="@+id/linear_lay_buttons_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:background="@color/mine_shaft">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:gravity="center_horizontal">
+
+                <ImageView
+                    android:id="@+id/location_img"
+                    android:layout_width="0dp"
+                    android:layout_height="90dp"
+                    app:srcCompat="@drawable/location"
+                    android:contentDescription="@string/location_icon" />
+
+                <Space
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:id="@+id/statistics_img"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/stats_icon"
+                    android:layout_marginTop="5dp"
+                    android:contentDescription="@string/statistics_icon" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/add_location_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_location"
+                    android:textColor="@color/white" />
+
+                <Space
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/show_statistics_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/show_statistics"
+                    android:textColor="@color/white" />
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/cod_gray"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Switch
+                android:id="@+id/infection_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:splitTrack="true"
+                android:switchMinWidth="55dp"
+                android:fontFamily="@font/lato_regular"
+                android:text="@string/infection_status"
+                android:switchPadding="20dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:thumbTint="@color/chestnut_rose"
+                android:trackTint="@drawable/checker_track"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
