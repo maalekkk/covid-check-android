@@ -3,32 +3,16 @@
 
     <item android:state_pressed="true">
         <shape>
-            <gradient
-                android:startColor="@color/robins_egg_blue"
-                android:endColor="@color/teal"
-                android:angle="0"/>
-            <corners
-                android:radius="4dp"/>
-            <padding
-                android:right="10dp"
-                android:top="10dp"
-                android:bottom="10dp"
-                android:left="10dp"/>
+            <gradient android:angle="0" android:endColor="@color/teal" android:startColor="@color/robins_egg_blue" />
+            <corners android:radius="4dp" />
+            <padding android:bottom="10dp" android:left="10dp" android:right="10dp" android:top="10dp" />
         </shape>
     </item>
     <item>
         <shape>
-            <gradient
-                android:startColor="@color/robins_egg_blue"
-                android:endColor="@color/heliotrope"
-                android:angle="0"/>
-            <corners
-                android:radius="4dp"/>
-            <padding
-                android:right="5dp"
-                android:top="10dp"
-                android:bottom="10dp"
-                android:left="10dp"/>
+            <gradient android:angle="0" android:endColor="@color/heliotrope" android:startColor="@color/robins_egg_blue" />
+            <corners android:radius="4dp" />
+            <padding android:bottom="10dp" android:left="10dp" android:right="5dp" android:top="10dp" />
         </shape>
     </item>
 </selector>

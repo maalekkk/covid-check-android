@@ -7,14 +7,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-<!--    material.io dark colors-->
+    <!--    material.io dark colors-->
     <color name="cod_gray">#121212</color>
     <color name="mine_shaft">#1F1F1F</color>
     <color name="heliotrope">#BB86FC</color>
     <color name="purple">#3700B3</color>
     <color name="robins_egg_blue">#03DAC6</color>
     <color name="chestnut_rose">#CF6679</color>
-<!--    material.io light colors-->
+    <!--    material.io light colors-->
     <color name="electric_violet">#6200EE</color>
     <color name="teal">#018786</color>
     <color name="monza">#B00020</color>

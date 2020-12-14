@@ -10,35 +10,35 @@
         android:id="@+id/wave_top_img"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:contentDescription="@string/top_wave"
         android:scaleType="fitStart"
-        android:src="@drawable/ic_wave2"
-        android:contentDescription="@string/top_wave" />
+        android:src="@drawable/ic_wave2" />
 
     <ImageView
         android:id="@+id/person_profile_img"
         android:layout_width="70dp"
         android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        app:srcCompat="@drawable/person_account"
-        android:layout_alignParentEnd="true"
-        android:contentDescription="@string/person_profile" />
+        android:contentDescription="@string/person_profile"
+        app:srcCompat="@drawable/person_account" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/person_profile_img"
         android:layout_above="@id/linear_lay_buttons_bottom"
+        android:layout_below="@id/person_profile_img"
+        android:layout_marginTop="60dp"
         android:layout_marginBottom="70dp"
-        android:orientation="vertical"
-        android:layout_marginTop="60dp">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/your_recent_locations"
             android:layout_marginStart="56dp"
             android:layout_marginBottom="10dp"
+            android:text="@string/your_recent_locations"
             android:textColor="@color/white" />
 
         <ListView
@@ -48,7 +48,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="40dp"
-            android:scrollbarSize="3dp"/>
+            android:scrollbarSize="3dp" />
     </LinearLayout>
 
     <ImageView
@@ -57,17 +57,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="-40dp"
-        android:src="@drawable/ic_wave1"
-        android:contentDescription="@string/bottom_wave" />
+        android:contentDescription="@string/bottom_wave"
+        android:src="@drawable/ic_wave1" />
 
     <LinearLayout
         android:id="@+id/linear_lay_buttons_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
         android:layout_alignParentBottom="true"
-        android:background="@color/mine_shaft">
+        android:background="@color/mine_shaft"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <TableLayout
             android:layout_width="match_parent"
@@ -85,8 +85,8 @@
                     android:id="@+id/location_img"
                     android:layout_width="0dp"
                     android:layout_height="90dp"
-                    app:srcCompat="@drawable/location"
-                    android:contentDescription="@string/location_icon" />
+                    android:contentDescription="@string/location_icon"
+                    app:srcCompat="@drawable/location" />
 
                 <Space
                     android:layout_width="70dp"
@@ -96,9 +96,9 @@
                     android:id="@+id/statistics_img"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/stats_icon"
                     android:layout_marginTop="5dp"
-                    android:contentDescription="@string/statistics_icon" />
+                    android:contentDescription="@string/statistics_icon"
+                    android:src="@drawable/stats_icon" />
             </TableRow>
 
             <TableRow
@@ -137,14 +137,14 @@
                 android:id="@+id/infection_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_margin="10dp"
+                android:fontFamily="@font/lato_regular"
                 android:gravity="center"
                 android:splitTrack="true"
                 android:switchMinWidth="55dp"
-                android:fontFamily="@font/lato_regular"
-                android:text="@string/infection_status"
                 android:switchPadding="20dp"
-                android:layout_gravity="center_vertical"
+                android:text="@string/infection_status"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:thumbTint="@color/chestnut_rose"

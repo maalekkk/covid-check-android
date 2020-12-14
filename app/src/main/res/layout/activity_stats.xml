@@ -9,37 +9,37 @@
         android:id="@+id/wave2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/top_wave"
         android:scaleType="fitStart"
-        android:src="@drawable/ic_wave2"
-        android:contentDescription="@string/top_wave" />
+        android:src="@drawable/ic_wave2" />
 
     <ImageView
         android:id="@+id/person_profile_img"
         android:layout_width="70dp"
         android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        app:srcCompat="@drawable/person_white"
-        android:layout_alignParentEnd="true"
-        android:contentDescription="@string/person_profile" />
+        android:contentDescription="@string/person_profile"
+        app:srcCompat="@drawable/person_white" />
 
     <ImageView
         android:id="@+id/go_back_img"
         android:layout_width="70dp"
         android:layout_height="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        app:srcCompat="@drawable/ic_back_track"
         android:layout_alignParentStart="true"
-        app:tint="@color/white"
-        android:contentDescription="@string/go_back_to_main" />
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/go_back_to_main"
+        app:srcCompat="@drawable/ic_back_track"
+        app:tint="@color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
         android:layout_height="match_parent"
         android:layout_below="@id/person_profile_img"
         android:layout_marginTop="100dp"
+        android:orientation="vertical"
         android:paddingStart="30dp"
         android:paddingEnd="30dp"
         android:paddingBottom="20dp">
@@ -55,8 +55,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:baselineAligned="false">
+                android:baselineAligned="false"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -69,24 +69,24 @@
                         android:id="@+id/left_tile_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/round_bg_layout"
                         android:orientation="vertical"
-                        android:padding="13dp"
-                        android:background="@drawable/round_bg_layout">
+                        android:padding="13dp">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Covid cases"
-                            android:textColor="#BCBCBC"/>
+                            android:textColor="#BCBCBC" />
 
                         <TextView
                             android:id="@+id/left_tile_1_txt"
-                            android:textSize="30sp"
-                            android:textColor="@color/white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            android:text="51.3M" />
+                            android:text="51.3M"
+                            android:textColor="@color/white"
+                            android:textSize="30sp" />
 
                     </LinearLayout>
 
@@ -94,25 +94,25 @@
                         android:id="@+id/left_tile_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="13dp"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/round_bg_layout">
+                        android:background="@drawable/round_bg_layout"
+                        android:orientation="vertical"
+                        android:padding="13dp">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Covid deaths"
-                            android:textColor="#BCBCBC"/>
+                            android:textColor="#BCBCBC" />
 
                         <TextView
                             android:id="@+id/left_tile_2_txt"
-                            android:textSize="30sp"
-                            android:textColor="@color/white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            android:text="1.3M" />
+                            android:text="1.3M"
+                            android:textColor="@color/white"
+                            android:textSize="30sp" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -131,10 +131,10 @@
                         android:id="@+id/left_tile_3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginTop="10dp"
-                        android:padding="13dp"
-                        android:background="@drawable/round_bg_layout">
+                        android:background="@drawable/round_bg_layout"
+                        android:orientation="vertical"
+                        android:padding="13dp">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -144,12 +144,12 @@
 
                         <TextView
                             android:id="@+id/left_tile_3_txt"
-                            android:textSize="30sp"
-                            android:textColor="@color/white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            android:text="1.3M" />
+                            android:text="1.3M"
+                            android:textColor="@color/white"
+                            android:textSize="30sp" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -160,7 +160,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/c2"/>
+                            android:src="@drawable/c2" />
 
                     </LinearLayout>
 
@@ -168,10 +168,10 @@
                         android:id="@+id/left_tile_4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginTop="10dp"
-                        android:padding="13dp"
-                        android:background="@drawable/round_bg_layout">
+                        android:background="@drawable/round_bg_layout"
+                        android:orientation="vertical"
+                        android:padding="13dp">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -181,12 +181,12 @@
 
                         <TextView
                             android:id="@+id/left_tile_4_txt"
-                            android:textSize="30sp"
-                            android:textColor="@color/white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            android:text="51.3M" />
+                            android:text="51.3M"
+                            android:textColor="@color/white"
+                            android:textSize="30sp" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -202,9 +202,9 @@
                         android:id="@+id/right_tile_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/round_bg_layout"
                         android:orientation="vertical"
-                        android:padding="13dp"
-                        android:background="@drawable/round_bg_layout">
+                        android:padding="13dp">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -214,12 +214,12 @@
 
                         <TextView
                             android:id="@+id/right_tile_1_txt"
-                            android:textSize="30sp"
-                            android:textColor="@color/white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            android:text="1.3M" />
+                            android:text="1.3M"
+                            android:textColor="@color/white"
+                            android:textSize="30sp" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -230,7 +230,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/c2"/>
+                            android:src="@drawable/c2" />
 
                     </LinearLayout>
 
@@ -238,10 +238,10 @@
                         android:id="@+id/right_tile_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginTop="10dp"
-                        android:padding="13dp"
-                        android:background="@drawable/round_bg_layout">
+                        android:background="@drawable/round_bg_layout"
+                        android:orientation="vertical"
+                        android:padding="13dp">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -251,12 +251,12 @@
 
                         <TextView
                             android:id="@+id/right_tile_2_txt"
-                            android:textSize="30sp"
-                            android:textColor="@color/white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            android:text="51.3M" />
+                            android:text="51.3M"
+                            android:textColor="@color/white"
+                            android:textSize="30sp" />
 
                     </LinearLayout>
 
@@ -264,10 +264,10 @@
                         android:id="@+id/right_tile_3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="13dp"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/round_bg_layout">
+                        android:background="@drawable/round_bg_layout"
+                        android:orientation="vertical"
+                        android:padding="13dp">
 
                         <TextView
                             android:id="@+id/textView3"
@@ -278,18 +278,18 @@
 
                         <TextView
                             android:id="@+id/right_tile_3_txt"
-                            android:textSize="30sp"
-                            android:textColor="@color/white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            android:text="1.3M" />
+                            android:text="1.3M"
+                            android:textColor="@color/white"
+                            android:textSize="30sp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="+12.3% of targets"
-                            android:textColor="#BCBCBC"  />
+                            android:textColor="#BCBCBC" />
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -302,25 +302,25 @@
                         android:id="@+id/right_tile_4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginTop="10dp"
-                        android:padding="13dp"
-                        android:background="@drawable/round_bg_layout">
+                        android:background="@drawable/round_bg_layout"
+                        android:orientation="vertical"
+                        android:padding="13dp">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="#BCBCBC"
-                            android:text="Covid cases"/>
+                            android:text="Covid cases"
+                            android:textColor="#BCBCBC" />
 
                         <TextView
                             android:id="@+id/right_tile_4_txt"
-                            android:textSize="30sp"
-                            android:textColor="@color/white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            android:text="51.3M" />
+                            android:text="51.3M"
+                            android:textColor="@color/white"
+                            android:textSize="30sp" />
 
                     </LinearLayout>
 
@@ -328,31 +328,31 @@
                         android:id="@+id/right_tile_5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="13dp"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/round_bg_layout">
+                        android:background="@drawable/round_bg_layout"
+                        android:orientation="vertical"
+                        android:padding="13dp">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="#BCBCBC"
-                            android:text="Covid deaths" />
+                            android:text="Covid deaths"
+                            android:textColor="#BCBCBC" />
 
                         <TextView
                             android:id="@+id/right_tile_5_txt"
-                            android:textSize="30sp"
-                            android:textColor="@color/white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            android:text="1.3M" />
+                            android:text="1.3M"
+                            android:textColor="@color/white"
+                            android:textSize="30sp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="#BCBCBC"
-                            android:text="+12.3% of targets" />
+                            android:text="+12.3% of targets"
+                            android:textColor="#BCBCBC" />
 
                         <ImageView
                             android:layout_width="wrap_content"
