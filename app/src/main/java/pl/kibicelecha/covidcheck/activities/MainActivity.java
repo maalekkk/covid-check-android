@@ -5,6 +5,9 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.database.FirebaseDatabase;
+
+import im.delight.android.location.SimpleLocation;
 import pl.kibicelecha.covidcheck.R;
 
 public class MainActivity extends BaseActivity
