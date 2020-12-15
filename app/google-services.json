@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "944965660310",
+    "project_id": "covidcheck-b2df5",
+    "storage_bucket": "covidcheck-b2df5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:944965660310:android:7b11458754026f32ae9cb7",
+        "android_client_info": {
+          "package_name": "pl.kibicelecha.covidcheck"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "944965660310-tvinif0mgkuf1gbvtoou3ktoti6l3uuq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVR8c4Y7fkGS0ft89xTCHfQqIRFU4Xhz4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "944965660310-tvinif0mgkuf1gbvtoou3ktoti6l3uuq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
