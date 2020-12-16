@@ -31,12 +31,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="35sp"
-                android:textColor="@color/white"
-                android:alpha="0.95"
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="15dp"
-                android:text="@string/joinUs" />
+                android:alpha="0.95"
+                android:text="@string/joinUs"
+                android:textColor="@color/white"
+                android:textSize="35sp" />
+
+            <AutoCompleteTextView
+                android:id="@+id/username_registration_txt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_rect"
+                android:drawableStart="@drawable/ic_baseline_account_circle_24"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/white"
+                android:hint="@string/global_txt_username"
+                android:inputType="textPersonName"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="15sp" />
 
             <AutoCompleteTextView
                 android:id="@+id/email_registration_txt"

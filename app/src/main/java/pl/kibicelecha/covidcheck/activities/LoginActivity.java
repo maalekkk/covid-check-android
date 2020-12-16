@@ -43,25 +43,19 @@ public class LoginActivity extends BaseActivity
         }
 
         auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, task ->
+                .addOnSuccessListener(this, task ->
                 {
-                    if (!task.isSuccessful())
-                    {
-                        Toast.makeText(this, R.string.login_err_invalid_cred, Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    auth.getCurrentUser().reload();
                     if (auth.getCurrentUser().isEmailVerified())
                     {
                         startActivityAndFinish(LoginActivity.this, MainActivity.class);
                     }
                     else
                     {
-                        auth.signOut();
                         Toast.makeText(this, "Email is not verified!", Toast.LENGTH_SHORT).show();
                     }
-                });
+                })
+                .addOnFailureListener(this, task ->
+                        Toast.makeText(this, R.string.login_err_invalid_cred, Toast.LENGTH_SHORT).show());
     }
 
     public void startRegister(View view)

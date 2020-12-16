@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Covid Check</string>
     <string name="emailReg">Email</string>
+    <string name="global_txt_username">Username</string>
     <string name="passwordReg">Password</string>
     <string name="password2Reg">Confirm password</string>
     <string name="sign_upReg">Sign up</string>

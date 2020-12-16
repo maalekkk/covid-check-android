@@ -7,10 +7,14 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import pl.kibicelecha.covidcheck.R;
+import pl.kibicelecha.covidcheck.model.User;
 
 public class RegisterActivity extends BaseActivity
 {
+    private TextView mUsername;
     private TextView mEmail;
     private TextView mPassword;
     private TextView mPasswordConfirm;
@@ -20,6 +24,7 @@ public class RegisterActivity extends BaseActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        mUsername = ((TextView) findViewById(R.id.username_registration_txt));
         mEmail = ((TextView) findViewById(R.id.email_registration_txt));
         mPassword = ((TextView) findViewById(R.id.password_registration_txt));
         mPasswordConfirm = ((TextView) findViewById(R.id.password2_registration_txt));
@@ -27,28 +32,27 @@ public class RegisterActivity extends BaseActivity
 
     public void signUp(View view)
     {
+        String username = mUsername.getText().toString();
         String email = mEmail.getText().toString();
         String password = mPassword.getText().toString();
         String passwordConfirm = mPasswordConfirm.getText().toString();
-        if (!validateForm(email, password, passwordConfirm))
+        if (!validateForm(username, email, password, passwordConfirm))
         {
             return;
         }
 
         auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, task ->
+                .addOnSuccessListener(this, task ->
                 {
-                    if (!task.isSuccessful())
-                    {
-                        Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
+                    FirebaseDatabase.getInstance().getReference(DB_COLLECTION_USERS).child(auth.getUid())
+                            .setValue(new User(username, false));
                     auth.getCurrentUser().sendEmailVerification();
                     auth.signOut();
                     Toast.makeText(this, "Email verification was sent!", Toast.LENGTH_SHORT).show();
                     finish();
-                });
+                })
+                .addOnFailureListener(this, task ->
+                        Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show());
     }
 
     public void backLogin(View view)
@@ -56,9 +60,19 @@ public class RegisterActivity extends BaseActivity
         finish();
     }
 
-    private boolean validateForm(String email, String pass, String confirmPass)
+    private boolean validateForm(String username, String email, String pass, String confirmPass)
     {
         boolean valid = true;
+
+        if (TextUtils.isEmpty(username))
+        {
+            mUsername.setError("Required.");
+            valid = false;
+        }
+        else
+        {
+            mUsername.setError(null);
+        }
 
         if (TextUtils.isEmpty(email))
         {
