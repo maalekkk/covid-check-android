@@ -26,5 +26,6 @@
     <string name="logo">logo</string>
     <string name="go_back_to_main">Go back to main activity</string>
     <string name="login_err_invalid_cred">Invalid email or password!</string>
-
+    <string name="joinUs">Join Us!</string>
+    <string name="passwordReset">Password Reset!</string>
 </resources>

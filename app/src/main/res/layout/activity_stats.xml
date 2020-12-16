@@ -21,7 +21,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:contentDescription="@string/person_profile"
-        app:srcCompat="@drawable/person_white" />
+        app:srcCompat="@drawable/ic_baseline_account_circle_24" />
 
     <ImageView
         android:id="@+id/go_back_img"
