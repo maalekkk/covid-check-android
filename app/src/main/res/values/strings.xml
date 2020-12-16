@@ -1,32 +1,38 @@
 <resources>
-    <string name="app_name">Covid Check</string>
-    <string name="emailReg">Email</string>
+    <string name="global_txt_app_name" translatable="false">Covid Check</string>
+    <string name="global_txt_email" translatable="false">Email</string>
     <string name="global_txt_username">Username</string>
-    <string name="passwordReg">Password</string>
-    <string name="password2Reg">Confirm password</string>
-    <string name="sign_upReg">Sign up</string>
-    <string name="sign_inLog">Sign in</string>
-    <string name="signin_redirect">Already a member? Sign in!</string>
-    <string name="forgot_password">Forgot password?</string>
-    <string name="signup_redirect">Don\'t have an account? Register here!</string>
-    <string name="sign_in_description">Sign in text on registration activity</string>
-    <string name="join_us_description">Join us text on registration activity</string>
-    <string name="reset_password_instruction">You will receive an email with instructions on resetting password.</string>
-    <string name="reset_password">Reset password</string>
-    <string name="go_back_to_sign_in">Go back to Sign In.</string>
-    <string name="password_reset_description">Password reset text on reset password activity</string>
-    <string name="your_recent_locations">Your recent locations:</string>
-    <string name="show_statistics">Show statistics</string>
-    <string name="add_location">Add location</string>
-    <string name="bottom_wave">bottom_wave</string>
-    <string name="person_profile">person_profile</string>
-    <string name="top_wave">top_wave</string>
-    <string name="location_icon">location_icon</string>
-    <string name="statistics_icon">statistics_icon</string>
-    <string name="infection_status">Infection status</string>
-    <string name="logo">logo</string>
-    <string name="go_back_to_main">Go back to main activity</string>
+    <string name="auth_txt_password">Password</string>
+    <string name="register_txt_conf_password">Confirm password</string>
+    <string name="register_btn_sign_up">Sign up</string>
+    <string name="login_btn_sign_in">Sign in</string>
+    <string name="register_txt_sign_in_redirect">Already a member? Sign in!</string>
+    <string name="login_txt_forgot_password">Forgot password?</string>
+    <string name="login_txt_sign_up_redirect">Don\'t have an account? Register here!</string>
+    <string name="login_txt_sign_in">Sign in</string>
+    <string name="reset_info_reset_pw_email">You will receive now an email with instructions on resetting password.</string>
+    <string name="reset_btn_reset_pw">Reset password</string>
+    <string name="reset_txt_go_back">Go back to Sign In.</string>
+    <string name="reset_desc_reset_pw">Password reset text</string>
+    <string name="main_txt_your_recent_locations">Your recent locations:</string>
+    <string name="main_txt_show_statistics">Show statistics</string>
+    <string name="main_txt_add_location">Add location</string>
+    <string name="layout_desc_bottom_wave">Bottom wave text</string>
+    <string name="layout_desc_person_profile">Person profile text</string>
+    <string name="layout_desc_top_wave">Top wave text</string>
+    <string name="layout_desc_location_icon" translatable="false">location_icon</string>
+    <string name="layout_desc_statistics_icon" translatable="false">statistics_icon</string>
+    <string name="main_txt_infection_status">Infection status</string>
+    <string name="global_desc_logo" translatable="false">logo</string>
+    <string name="stats_desc_go_back">Go back to main activity</string>
     <string name="login_err_invalid_cred">Invalid email or password!</string>
-    <string name="joinUs">Join Us!</string>
-    <string name="passwordReset">Password Reset!</string>
+    <string name="register_txt_join_us">Join Us!</string>
+    <string name="reset_txt_reset_pw">Password Reset!</string>
+    <string name="login_err_unverified_email">Email is not verified!</string>
+    <string name="login_err_required">Required!</string>
+    <string name="login_err_invalid_email">Invalid email!</string>
+    <string name="register_err_sth_wrong">Something went wrong!</string>
+    <string name="register_info_email_verification">Email verification was sent!</string>
+    <string name="register_err_password_same">Password must be the same!</string>
+    <string name="reset_info_email_with_reset">Email with reset password was sent!</string>
 </resources>

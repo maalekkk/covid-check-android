@@ -9,7 +9,7 @@
         android:id="@+id/wave2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/top_wave"
+        android:contentDescription="@string/layout_desc_top_wave"
         android:scaleType="fitStart"
         android:src="@drawable/ic_wave2" />
 
@@ -20,7 +20,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        android:contentDescription="@string/person_profile"
+        android:contentDescription="@string/layout_desc_person_profile"
         app:srcCompat="@drawable/ic_baseline_account_circle_24" />
 
     <ImageView
@@ -30,7 +30,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:contentDescription="@string/go_back_to_main"
+        android:contentDescription="@string/stats_desc_go_back"
         app:srcCompat="@drawable/ic_back_track"
         app:tint="@color/white" />
 

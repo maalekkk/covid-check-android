@@ -33,11 +33,11 @@ public class ResetPwActivity extends BaseActivity
         {
             if (!task.isSuccessful())
             {
-                Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.register_err_sth_wrong, Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            Toast.makeText(this, "Email with reset password was sent!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.reset_info_email_with_reset, Toast.LENGTH_SHORT).show();
             finish();
         });
     }
@@ -51,12 +51,12 @@ public class ResetPwActivity extends BaseActivity
     {
         if (TextUtils.isEmpty(email))
         {
-            mEmail.setError("Required.");
+            mEmail.setError(getString(R.string.login_err_required));
             return false;
         }
         else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
         {
-            mEmail.setError("Invalid email.");
+            mEmail.setError(getString(R.string.login_err_invalid_email));
             return false;
         }
         mEmail.setError(null);
