@@ -16,9 +16,9 @@ import im.delight.android.location.SimpleLocation;
 
 public class BaseActivity extends AppCompatActivity
 {
-    private static final int TAG_CODE_PERMISSION_LOCATION = 1;
     protected static final String DB_COLLECTION_USERS = "users";
     protected static final String DB_COLLECTION_PLACE = "places";
+    private static final int TAG_CODE_PERMISSION_LOCATION = 1;
     protected FirebaseAuth auth;
     protected SimpleLocation location;
 
