@@ -59,7 +59,7 @@ public class LoginActivity extends BaseActivity
                     else
                     {
                         auth.signOut();
-                        Toast.makeText(this, "Email is not verified!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.login_err_unverified_email, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -80,12 +80,12 @@ public class LoginActivity extends BaseActivity
 
         if (TextUtils.isEmpty(email))
         {
-            mEmail.setError("Required.");
+            mEmail.setError(getString(R.string.login_err_required));
             valid = false;
         }
         else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
         {
-            mEmail.setError("Invalid email.");
+            mEmail.setError(getString(R.string.login_err_invalid_email));
             valid = false;
         }
         else
@@ -95,7 +95,7 @@ public class LoginActivity extends BaseActivity
 
         if (TextUtils.isEmpty(password))
         {
-            mPassword.setError("Required.");
+            mPassword.setError(getString(R.string.login_err_required));
             valid = false;
         }
         else

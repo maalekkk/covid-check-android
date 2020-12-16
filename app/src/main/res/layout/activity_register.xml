@@ -93,7 +93,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/btn_gradient"
                 android:onClick="signUp"
-                android:text="@string/register_txt_sign_up"
+                android:text="@string/register_btn_sign_up"
                 android:textColor="#FFFFFF" />
 
             <TextView

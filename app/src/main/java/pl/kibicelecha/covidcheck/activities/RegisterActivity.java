@@ -40,13 +40,13 @@ public class RegisterActivity extends BaseActivity
                 {
                     if (!task.isSuccessful())
                     {
-                        Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.register_err_sth_wrong, Toast.LENGTH_SHORT).show();
                         return;
                     }
 
                     auth.getCurrentUser().sendEmailVerification();
                     auth.signOut();
-                    Toast.makeText(this, "Email verification was sent!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.register_info_email_verification, Toast.LENGTH_SHORT).show();
                     finish();
                 });
     }
@@ -62,12 +62,12 @@ public class RegisterActivity extends BaseActivity
 
         if (TextUtils.isEmpty(email))
         {
-            mEmail.setError("Required.");
+            mEmail.setError(getString(R.string.login_err_required));
             valid = false;
         }
         else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
         {
-            mEmail.setError("Invalid email.");
+            mEmail.setError(getString(R.string.login_err_invalid_email));
             valid = false;
         }
         else
@@ -77,7 +77,7 @@ public class RegisterActivity extends BaseActivity
 
         if (TextUtils.isEmpty(pass))
         {
-            mPassword.setError("Required.");
+            mPassword.setError(getString(R.string.login_err_required));
             valid = false;
         }
         else
@@ -87,7 +87,7 @@ public class RegisterActivity extends BaseActivity
 
         if (!TextUtils.equals(pass, confirmPass))
         {
-            mPasswordConfirm.setError("Password must be the same.");
+            mPasswordConfirm.setError(getString(R.string.register_err_password_same));
             valid = false;
         }
         else

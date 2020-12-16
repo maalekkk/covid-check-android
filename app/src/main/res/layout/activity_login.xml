@@ -36,7 +36,7 @@
                 android:alpha="0.95"
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="15dp"
-                android:text="@string/login_desc_sign_in"/>
+                android:text="@string/login_txt_sign_in"/>
 
             <AutoCompleteTextView
                 android:id="@+id/email_log_txt"
@@ -87,7 +87,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/btn_gradient"
                 android:onClick="signIn"
-                android:text="@string/login_txt_sign_in"
+                android:text="@string/login_btn_sign_in"
                 android:textColor="#FFFFFF" />
 
             <TextView

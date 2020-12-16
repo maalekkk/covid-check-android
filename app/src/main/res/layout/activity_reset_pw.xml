@@ -37,7 +37,7 @@
                 android:alpha="0.95"
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="15dp"
-                android:text="@string/reset_txt_pw_reset" />
+                android:text="@string/reset_txt_reset_pw" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/btn_gradient"
                 android:onClick="resetPassword"
-                android:text="@string/reset_txt_reset_pw"
+                android:text="@string/reset_btn_reset_pw"
                 android:textColor="#FFFFFF" />
 
             <TextView

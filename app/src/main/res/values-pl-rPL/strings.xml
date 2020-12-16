@@ -2,15 +2,14 @@
 <resources>
     <string name="auth_txt_password">Hasło</string>
     <string name="register_txt_conf_password">Potwierdź hasło</string>
-    <string name="register_txt_sign_up">Zarejestruj się</string>
-    <string name="login_txt_sign_in">Zaloguj się</string>
+    <string name="register_btn_sign_up">Zarejestruj się</string>
+    <string name="login_btn_sign_in">Zaloguj się</string>
     <string name="register_txt_sign_in_redirect">Masz już konto? Zaloguj się!</string>
     <string name="login_txt_forgot_password">Zapomniałeś hasła?</string>
     <string name="login_txt_sign_up_redirect">Nie masz konta? Zarejestruj się tutaj!</string>
-    <string name="login_desc_sign_in">Tekst: Zaloguj się</string>
-    <string name="register_desc_join_us">Tekst: Dołącz do nas</string>
+    <string name="login_txt_sign_in">Zaloguj się</string>
     <string name="reset_info_reset_pw_email">Dostaniesz teraz email z instrukcją resetowania hasła.</string>
-    <string name="reset_txt_reset_pw">Zresetuj hasło</string>
+    <string name="reset_btn_reset_pw">Zresetuj hasło</string>
     <string name="reset_txt_go_back">Wróć, aby się zalogować.</string>
     <string name="reset_desc_reset_pw">Tekst: Zresetuj hasło</string>
     <string name="main_txt_your_recent_locations">Twoje ostatnie lokalizacje:</string>
@@ -23,5 +22,12 @@
     <string name="stats_desc_go_back">Wróć do głównego menu</string>
     <string name="login_err_invalid_cred">Niepoprawny email lub hasło!</string>
     <string name="register_txt_join_us">Dołącz do nas!</string>
-    <string name="reset_txt_pw_reset">Zresetuj hasło!</string>
+    <string name="reset_txt_reset_pw">Zresetuj hasło!</string>
+    <string name="login_err_unverified_email">Email jest niezweryfikowany!</string>
+    <string name="login_err_required">Wymagane!</string>
+    <string name="login_err_invalid_email">Niepoprawny email!</string>
+    <string name="register_err_sth_wrong">Coś poszło nie tak!</string>
+    <string name="register_info_email_verification">Weryfikacja email została wysłana!</string>
+    <string name="register_err_password_same">Hasła muszą się zgadzać!</string>
+    <string name="reset_info_email_with_reset">Email z resetowaniem hasła został wysłany!</string>
 </resources>
