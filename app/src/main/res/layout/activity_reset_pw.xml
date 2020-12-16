@@ -24,7 +24,7 @@
                 android:layout_height="160dp"
                 android:layout_marginTop="18dp"
                 android:layout_marginBottom="55dp"
-                android:contentDescription="@string/logo"
+                android:contentDescription="@string/global_desc_logo"
                 android:scaleType="fitCenter"
                 android:src="@drawable/logo" />
 
@@ -37,7 +37,7 @@
                 android:alpha="0.95"
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="15dp"
-                android:text="@string/passwordReset" />
+                android:text="@string/reset_txt_pw_reset" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="20dp"
-                android:text="@string/reset_password_instruction"
+                android:text="@string/reset_info_reset_pw_email"
                 android:textAlignment="center"
                 android:textColor="@color/white" />
 
@@ -57,7 +57,7 @@
                 android:background="@drawable/rounded_rect"
                 android:drawableStart="@drawable/ic_baseline_email_24"
                 android:drawablePadding="10dp"
-                android:hint="@string/emailReg"
+                android:hint="@string/global_txt_email"
                 android:inputType="textEmailAddress"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
@@ -72,7 +72,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/btn_gradient"
                 android:onClick="resetPassword"
-                android:text="@string/reset_password"
+                android:text="@string/reset_txt_reset_pw"
                 android:textColor="#FFFFFF" />
 
             <TextView
@@ -82,7 +82,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:onClick="backLogin"
-                android:text="@string/go_back_to_sign_in" />
+                android:text="@string/reset_txt_go_back" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

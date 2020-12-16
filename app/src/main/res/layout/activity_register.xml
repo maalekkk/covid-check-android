@@ -23,7 +23,7 @@
                 android:layout_height="160dp"
                 android:layout_marginTop="18dp"
                 android:layout_marginBottom="55dp"
-                android:contentDescription="@string/logo"
+                android:contentDescription="@string/global_desc_logo"
                 android:scaleType="fitCenter"
                 android:src="@drawable/logo" />
 
@@ -36,7 +36,7 @@
                 android:alpha="0.95"
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="15dp"
-                android:text="@string/joinUs" />
+                android:text="@string/register_txt_join_us" />
 
             <AutoCompleteTextView
                 android:id="@+id/email_registration_txt"
@@ -46,7 +46,7 @@
                 android:background="@drawable/rounded_rect"
                 android:drawableStart="@drawable/ic_baseline_email_24"
                 android:drawablePadding="10dp"
-                android:hint="@string/emailReg"
+                android:hint="@string/global_txt_email"
                 android:inputType="textEmailAddress"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
@@ -62,7 +62,7 @@
                 android:background="@drawable/rounded_rect"
                 android:drawableStart="@drawable/ic_baseline_lock_24"
                 android:drawablePadding="10dp"
-                android:hint="@string/passwordReg"
+                android:hint="@string/auth_txt_password"
                 android:inputType="textPassword"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
@@ -78,7 +78,7 @@
                 android:background="@drawable/rounded_rect"
                 android:drawableStart="@drawable/ic_baseline_lock_24"
                 android:drawablePadding="10dp"
-                android:hint="@string/password2Reg"
+                android:hint="@string/register_txt_conf_password"
                 android:inputType="textPassword"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
@@ -93,7 +93,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/btn_gradient"
                 android:onClick="signUp"
-                android:text="@string/sign_upReg"
+                android:text="@string/register_txt_sign_up"
                 android:textColor="#FFFFFF" />
 
             <TextView
@@ -103,7 +103,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:onClick="backLogin"
-                android:text="@string/signin_redirect" />
+                android:text="@string/register_txt_sign_in_redirect" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
