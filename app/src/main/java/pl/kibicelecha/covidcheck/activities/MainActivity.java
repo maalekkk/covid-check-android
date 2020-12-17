@@ -41,6 +41,8 @@ public class MainActivity extends BaseActivity
 
     private TextView mEmail;
 
+    private User currentUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -122,32 +124,61 @@ public class MainActivity extends BaseActivity
         location.endUpdates();
     }
 
-    public void showSaveLocationOptions(View view)
+    public void showLocationDialog(View view)
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Choose saving mode");
+        KAlertDialog locationDialog = new KAlertDialog(this, KAlertDialog.CUSTOM_IMAGE_TYPE);
+        locationDialog.setTitleText("Automatyczna Lokalizacja")
+                .setContentText("Czy chcesz udostępnić swoją obecną lokalizację?")
+                .setCustomImage(R.drawable.location)
+                .setCancelText("Nie")
+                .setConfirmText("Tak")
+                .cancelButtonColor(R.color.chestnut_rose)
+                .confirmButtonColor(R.color.success_stroke_color)
+                .setConfirmClickListener(
+                        kAlertDialog ->
+                        {
+                            Point point = location.getPosition();
+                            refPlaces.push().setValue(new Place(auth.getCurrentUser().getUid(), point.latitude, point.longitude))
+                                    .addOnSuccessListener(this, task ->
+                                            Toast.makeText(this, "Added your location!", Toast.LENGTH_SHORT).show());
+                        })
+                .show();
+        locationDialog.setCanceledOnTouchOutside(true);
+    }
 
-        String[] options = {"Automatic", "Manual"};
-        builder.setItems(options, (dialog, which) ->
-        {
-            switch (which)
-            {
-                case 0:
-                {
-                    Point point = location.getPosition();
-                    refPlaces.push().setValue(new Place(auth.getCurrentUser().getUid(), point.latitude, point.longitude))
-                            .addOnSuccessListener(this, task ->
-                                    Toast.makeText(this, "Added location!", Toast.LENGTH_SHORT).show());
-                }
-                case 1:
-                {
-                    //TODO MANUAL
-                }
-            }
-        });
+    public void showAccountDialog(View view)
+    {
+        KAlertDialog locationDialog = new KAlertDialog(this, KAlertDialog.CUSTOM_IMAGE_TYPE);
+        String email = auth.getCurrentUser().getEmail();
+        String username = currentUser.getUsername();
+        String accountInfo = "Nazwa użytkownika: " + System.lineSeparator() +
+                username + System.lineSeparator() + System.lineSeparator()
+                + "Adres email: " + System.lineSeparator() + email;
+        locationDialog.setContentText(accountInfo)
+                .setTitleText("Twoje konto")
+                .setCustomImage(R.drawable.ic_baseline_account_circle_24)
+                .setCancelText("Wyloguj się")
+                .setConfirmText("Ok")
+                .confirmButtonColor(R.color.success_stroke_color)
+                .cancelButtonColor(R.color.chestnut_rose)
+                .setCancelClickListener(kAlertDialog -> showLogoutDialog(view))
+                .show();
+        locationDialog.setCanceledOnTouchOutside(true);
+    }
 
-        AlertDialog dialog = builder.create();
-        dialog.show();
+    public void showLogoutDialog(View view)
+    {
+        KAlertDialog logoutDialog = new KAlertDialog(this, KAlertDialog.WARNING_TYPE);
+        logoutDialog.setTitleText("Wyloguj się")
+                .setContentText("Czy na pewno chcesz się wylogować?")
+                .setConfirmText("Pozostań z nami")
+                .setCancelText("Wyloguj się")
+                .cancelButtonColor(R.color.chestnut_rose)
+                .confirmButtonColor(R.color.success_stroke_color)
+                .setCancelClickListener(kAlertDialog -> logout(view))
+                .setConfirmClickListener(kAlertDialog -> logoutDialog.dismissWithAnimation())
+                .show();
+        logoutDialog.setCanceledOnTouchOutside(true);
     }
 
     public void logout(View view)
@@ -164,6 +195,7 @@ public class MainActivity extends BaseActivity
             {
                 User user = snapshot.getValue(User.class);
                 mEmail.setText(user.getUsername());
+                currentUser = user;
             }
 
             @Override

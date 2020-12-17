@@ -30,7 +30,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:contentDescription="@string/layout_desc_person_profile"
-        android:onClick="logout"
+        android:onClick="showAccountDialog"
         app:srcCompat="@drawable/ic_baseline_account_circle_24" />
 
     <LinearLayout
@@ -95,7 +95,7 @@
                     android:layout_width="0dp"
                     android:layout_height="90dp"
                     android:contentDescription="@string/layout_desc_location_icon"
-                    android:onClick="showSaveLocationOptions"
+                    android:onClick="showLocationDialog"
                     app:srcCompat="@drawable/location" />
 
                 <Space
@@ -150,7 +150,6 @@
                 android:layout_gravity="center_vertical"
                 android:layout_margin="10dp"
                 android:gravity="center"
-                android:splitTrack="true"
                 android:switchMinWidth="55dp"
                 android:switchPadding="20dp"
                 android:text="@string/main_txt_infection_status"
