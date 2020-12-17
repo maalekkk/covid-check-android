@@ -1,24 +1,27 @@
 package pl.kibicelecha.covidcheck.model;
 
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.ServerValue;
+
+import java.io.Serializable;
 import java.util.Map;
 
-import im.delight.android.location.SimpleLocation.Point;
-
-public class Place
+public class Place implements Serializable
 {
     private String userId;
-    private Point point;
-    private Map<String, String> timestamp;
+    private Double latitude;
+    private Double longitude;
+    private Long timestamp;
 
     public Place()
     {
     }
 
-    public Place(String userId, Point point, Map<String, String> timestamp)
+    public Place(String userId, Double latitude, Double longitude)
     {
         this.userId = userId;
-        this.point = point;
-        this.timestamp = timestamp;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getUserId()
@@ -31,23 +34,45 @@ public class Place
         this.userId = userId;
     }
 
-    public Point getPoint()
+    public Double getLatitude()
     {
-        return point;
+        return latitude;
     }
 
-    public void setPoint(Point point)
+    public void setLatitude(Double latitude)
     {
-        this.point = point;
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude()
+    {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude)
+    {
+        this.longitude = longitude;
     }
 
     public Map<String, String> getTimestamp()
     {
+        return ServerValue.TIMESTAMP;
+    }
+
+    public void setTimestamp(Long timestamp)
+    {
+        this.timestamp = timestamp;
+    }
+
+    @Exclude
+    public Long getTimestampLong()
+    {
         return timestamp;
     }
 
-    public void setTimestamp(Map<String, String> timestamp)
+    @Override
+    public String toString()
     {
-        this.timestamp = timestamp;
+        return latitude + ", " + longitude;
     }
 }

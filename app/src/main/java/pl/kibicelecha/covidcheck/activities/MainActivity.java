@@ -3,22 +3,22 @@ package pl.kibicelecha.covidcheck.activities;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.firebase.ui.database.FirebaseListOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormatSymbols;
-
+import im.delight.android.location.SimpleLocation.Point;
 import pl.kibicelecha.covidcheck.R;
 import pl.kibicelecha.covidcheck.model.Place;
 import pl.kibicelecha.covidcheck.model.User;
@@ -26,11 +26,10 @@ import pl.kibicelecha.covidcheck.model.User;
 public class MainActivity extends BaseActivity
 {
     private DatabaseReference refPlaces;
+    private Query refUserPlaces;
     private DatabaseReference refUsers;
 
     private TextView mEmail;
-
-    private User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -44,7 +43,7 @@ public class MainActivity extends BaseActivity
         {
             if (auth.getCurrentUser() != null)
             {
-                getCurrentUser(refUsers);
+                setCurrentUser();
             }
             else
             {
@@ -53,12 +52,23 @@ public class MainActivity extends BaseActivity
         });
 
         refPlaces = FirebaseDatabase.getInstance().getReference().child(DB_COLLECTION_PLACE);
-        refPlaces.keepSynced(true);
+        refUserPlaces = refPlaces.orderByChild("userId").equalTo(auth.getCurrentUser().getUid());
+        refUserPlaces.keepSynced(true);
 
         ListView recent_locations = findViewById(R.id.recent_locations_list);
-        String[] months = new DateFormatSymbols().getMonths();
-        ArrayAdapter<String> monthAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, months);
-        recent_locations.setAdapter(monthAdapter);
+        FirebaseListOptions<Place> options = new FirebaseListOptions.Builder<Place>()
+                .setLayout(R.layout.custom_textview)
+                .setQuery(refUserPlaces, Place.class)
+                .setLifecycleOwner(this)
+                .build();
+        recent_locations.setAdapter(new FirebaseListAdapter<Place>(options)
+        {
+            @Override
+            protected void populateView(@NonNull View v, @NonNull Place model, int position)
+            {
+                ((TextView) v.findViewById(android.R.id.text1)).setText(model.toString());
+            }
+        });
     }
 
     @Override
@@ -87,13 +97,14 @@ public class MainActivity extends BaseActivity
             {
                 case 0:
                 {
-                    refPlaces.push().setValue(new Place(auth.getCurrentUser().getUid(), location.getPosition(), ServerValue.TIMESTAMP))
+                    Point point = location.getPosition();
+                    refPlaces.push().setValue(new Place(auth.getCurrentUser().getUid(), point.latitude, point.longitude))
                             .addOnSuccessListener(this, task ->
                                     Toast.makeText(this, "Added location!", Toast.LENGTH_SHORT).show());
                 }
                 case 1:
                 {
-
+                    //TODO MANUAL
                 }
             }
         });
@@ -107,22 +118,15 @@ public class MainActivity extends BaseActivity
         auth.signOut();
     }
 
-    private void getCurrentUser(DatabaseReference reference)
+    private void setCurrentUser()
     {
-        reference.addListenerForSingleValueEvent(new ValueEventListener()
+        refUsers.child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot)
             {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                {
-                    if (dataSnapshot.getKey().equals(auth.getCurrentUser().getUid()))
-                    {
-                        currentUser = dataSnapshot.getValue(User.class);
-                        mEmail.setText(currentUser.getUsername());
-                        break;
-                    }
-                }
+                User user = snapshot.getValue(User.class);
+                mEmail.setText(user.getUsername());
             }
 
             @Override

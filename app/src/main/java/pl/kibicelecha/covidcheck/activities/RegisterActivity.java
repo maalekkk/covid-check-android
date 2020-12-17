@@ -47,7 +47,6 @@ public class RegisterActivity extends BaseActivity
                     FirebaseDatabase.getInstance().getReference(DB_COLLECTION_USERS).child(auth.getUid())
                             .setValue(new User(username, false));
                     auth.getCurrentUser().sendEmailVerification();
-                    auth.signOut();
                     Toast.makeText(this, R.string.register_info_email_verification, Toast.LENGTH_SHORT).show();
                     finish();
                 })

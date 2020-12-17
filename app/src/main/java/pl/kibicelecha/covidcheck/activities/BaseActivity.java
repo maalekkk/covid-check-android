@@ -48,9 +48,9 @@ public class BaseActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onResume()
+    protected void onStart()
     {
-        super.onResume();
+        super.onStart();
         if (auth.getCurrentUser() != null)
         {
             auth.getCurrentUser().reload();

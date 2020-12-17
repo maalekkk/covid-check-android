@@ -89,7 +89,7 @@ public class LoginActivity extends BaseActivity
 
         if (TextUtils.isEmpty(password))
         {
-            mPassword.setError(getString(R.string.login_err_required));
+            mPassword.setError("Required.");
             valid = false;
         }
         else
