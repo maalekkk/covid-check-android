@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="5dp" >
+        tools:layout_editor_absoluteY="5dp">
 
         <ImageView
             android:layout_width="match_parent"
@@ -35,7 +35,7 @@
         <androidx.gridlayout.widget.GridLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:columnCount="1" >
+            app:columnCount="1">
 
             <TextView
                 android:layout_width="match_parent"

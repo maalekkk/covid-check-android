@@ -8,39 +8,22 @@ import com.developer.kalert.KAlertDialog;
 
 import pl.kibicelecha.covidcheck.R;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity
+{
 
     private TextView mEmail;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mEmail = findViewById(R.id.email_home_txt);
         mEmail.setText(auth.getCurrentUser().getEmail());
     }
 
-    public void showAccountDialog(View view) {
-//        Dialog accountDialog = new Dialog(this);
-//        accountDialog.setContentView(R.layout.account_popup);
-//        WindowManager.LayoutParams lp = accountDialog.getWindow().getAttributes();
-//        lp.dimAmount = 0.4F;
-//        accountDialog.getWindow().setAttributes(lp);
-//        accountDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-//        accountDialog.getWindow()
-//                .setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        int width = (int)(getResources().getDisplayMetrics().widthPixels*0.85);
-//        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.6);
-//        accountDialog.getWindow().setLayout(width, height);
-//
-//        TextView mAccountUsername = accountDialog.findViewById(R.id.username_account_txt);
-//        TextView mAccountEmail = accountDialog.findViewById(R.id.email_account_txt);
-//        mAccountUsername.setText(auth.getCurrentUser().getDisplayName());
-//        mAccountEmail.setText(auth.getCurrentUser().getEmail());
-//        ((ViewGroup) accountDialog.getWindow().getDecorView())
-//                .getChildAt(0).startAnimation(AnimationUtils.loadAnimation(
-//                this, android.R.anim.fade_in));
-//        accountDialog.show();
+    public void showAccountDialog(View view)
+    {
         KAlertDialog locationDialog = new KAlertDialog(this, KAlertDialog.CUSTOM_IMAGE_TYPE);
         String email = auth.getCurrentUser().getEmail();
         String username = auth.getCurrentUser().getDisplayName();
@@ -59,7 +42,8 @@ public class MainActivity extends BaseActivity {
         locationDialog.setCanceledOnTouchOutside(true);
     }
 
-    public void showLocationDialog(View view) {
+    public void showLocationDialog(View view)
+    {
         KAlertDialog locationDialog = new KAlertDialog(this, KAlertDialog.CUSTOM_IMAGE_TYPE);
         locationDialog.setTitleText("Automatyczna Lokalizacja")
                 .setContentText("Czy chcesz udostępnić swoją obecną lokalizację?")
@@ -68,15 +52,14 @@ public class MainActivity extends BaseActivity {
                 .setConfirmText("Tak")
                 .cancelButtonColor(R.color.chestnut_rose)
                 .confirmButtonColor(R.color.success_stroke_color)
-                .setCancelClickListener(
-                        kAlertDialog -> startActivity(MainActivity.this, MapActivity.class))
                 .setConfirmClickListener(
                         kAlertDialog -> locationDialog.dismissWithAnimation())
                 .show();
         locationDialog.setCanceledOnTouchOutside(true);
     }
 
-    public void showLogoutDialog(View view) {
+    public void showLogoutDialog(View view)
+    {
         KAlertDialog logoutDialog = new KAlertDialog(this, KAlertDialog.WARNING_TYPE);
         logoutDialog.setTitleText("Wyloguj się")
                 .setContentText("Czy na pewno chcesz się wylogować?")
@@ -90,7 +73,8 @@ public class MainActivity extends BaseActivity {
         logoutDialog.setCanceledOnTouchOutside(true);
     }
 
-    public void logout(View view) {
+    public void logout(View view)
+    {
         auth.signOut();
         startActivityAndFinish(this, LoginActivity.class);
     }

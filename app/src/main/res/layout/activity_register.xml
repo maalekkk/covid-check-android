@@ -31,12 +31,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="35sp"
-                android:textColor="@color/white"
-                android:alpha="0.95"
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="15dp"
-                android:text="@string/joinUs" />
+                android:alpha="0.95"
+                android:text="@string/joinUs"
+                android:textColor="@color/white"
+                android:textSize="35sp" />
 
             <AutoCompleteTextView
                 android:id="@+id/email_registration_txt"
