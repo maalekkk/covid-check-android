@@ -11,7 +11,7 @@
     <string name="reset_info_reset_pw_email">Dostaniesz teraz email z instrukcją resetowania hasła.</string>
     <string name="reset_btn_reset_pw">Zresetuj hasło</string>
     <string name="reset_txt_go_back">Wróć, aby się zalogować.</string>
-    <string name="reset_desc_reset_pw">Tekst: Zresetuj hasło</string>
+    <string name="reset_desc_reset_pw">Zresetuj hasło</string>
     <string name="main_txt_your_recent_locations">Twoje ostatnie lokalizacje:</string>
     <string name="main_txt_show_statistics">Pokaż statystyki</string>
     <string name="main_txt_add_location">Dodaj lokalizację</string>
@@ -30,4 +30,16 @@
     <string name="register_info_email_verification">Weryfikacja email została wysłana!</string>
     <string name="register_err_password_same">Hasła muszą się zgadzać!</string>
     <string name="reset_info_email_with_reset">Email z resetowaniem hasła został wysłany!</string>
+    <string name="global_txt_username">Nazwa użytkownika</string>
+    <string name="main_txt_auto_loc">Automatyczna lokalizacja</string>
+    <string name="main_info_share_your_loc">Czy chcesz udostępnić swoją obecną lokalizację?</string>
+    <string name="global_txt_yes">Tak</string>
+    <string name="global_txt_no">Nie</string>
+    <string name="main_txt_added_loc">Dodano twoją lokalizację!</string>
+    <string name="main_txt_logout">Wyloguj się</string>
+    <string name="main_info_ask_logout">Czy na pewno chcesz się wylogować?</string>
+    <string name="main_txt_stay">Pozostań z nami</string>
+    <string name="main_txt_your_acc">Twoje konto</string>
+    <string name="global_txt_ok">OK</string>
+    <string name="main_info_reject">Nie, wskażę samodzielnie</string>
 </resources>

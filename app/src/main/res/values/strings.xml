@@ -13,7 +13,7 @@
     <string name="reset_info_reset_pw_email">You will receive now an email with instructions on resetting password.</string>
     <string name="reset_btn_reset_pw">Reset password</string>
     <string name="reset_txt_go_back">Go back to Sign In.</string>
-    <string name="reset_desc_reset_pw">Password reset text</string>
+    <string name="reset_desc_reset_pw">Password reset</string>
     <string name="main_txt_your_recent_locations">Your recent locations:</string>
     <string name="main_txt_show_statistics">Show statistics</string>
     <string name="main_txt_add_location">Add location</string>
@@ -26,8 +26,8 @@
     <string name="global_desc_logo" translatable="false">logo</string>
     <string name="stats_desc_go_back">Go back to main activity</string>
     <string name="login_err_invalid_cred">Invalid email or password!</string>
-    <string name="register_txt_join_us">Join Us!</string>
-    <string name="reset_txt_reset_pw">Password Reset!</string>
+    <string name="register_txt_join_us">Join us!</string>
+    <string name="reset_txt_reset_pw">Password reset!</string>
     <string name="login_err_unverified_email">Email is not verified!</string>
     <string name="login_err_required">Required!</string>
     <string name="login_err_invalid_email">Invalid email!</string>
@@ -35,4 +35,15 @@
     <string name="register_info_email_verification">Email verification was sent!</string>
     <string name="register_err_password_same">Password must be the same!</string>
     <string name="reset_info_email_with_reset">Email with reset password was sent!</string>
+    <string name="main_txt_auto_loc">Automatic location</string>
+    <string name="global_txt_yes">Yes</string>
+    <string name="global_txt_no">No</string>
+    <string name="main_txt_added_loc">Added your location!</string>
+    <string name="main_txt_logout">Log out</string>
+    <string name="main_info_ask_logout">Are you sure you want to log out?</string>
+    <string name="main_txt_stay">Stay with us</string>
+    <string name="main_txt_your_acc">Your account</string>
+    <string name="global_txt_ok">OK</string>
+    <string name="main_info_share_your_loc">Do you want to share your current location?</string>
+    <string name="main_info_reject">No, I will indicate it myself</string>
 </resources>

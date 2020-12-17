@@ -37,10 +37,13 @@ public class MainActivity extends BaseActivity
 {
     private DatabaseReference refPlaces;
     private DatabaseReference refUsers;
-
     private TextView mNickname;
-
     private User currentUser;
+    private static final String USER_ID = "userId";
+    private static final String COMMA = ",";
+    private static final String DATETIME_PATTERN = "dd-MM-yyyy hh:mm:ss";
+    private static final String GEO = "geo:0,0?q=";
+    private static final String COLON = ": ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -63,7 +66,7 @@ public class MainActivity extends BaseActivity
         });
 
         refPlaces = FirebaseDatabase.getInstance().getReference().child(DB_COLLECTION_PLACE);
-        Query refUserPlaces = refPlaces.orderByChild("userId").equalTo(auth.getCurrentUser().getUid());
+        Query refUserPlaces = refPlaces.orderByChild(USER_ID).equalTo(auth.getCurrentUser().getUid());
         refUserPlaces.keepSynced(true);
 
         ListView recent_locations = findViewById(R.id.recent_locations_list);
@@ -85,14 +88,14 @@ public class MainActivity extends BaseActivity
                 }
                 catch (IOException e)
                 {
-                    address = model.getLatitude() + "," + model.getLongitude();
+                    address = model.getLatitude() + COMMA + model.getLongitude();
                     e.printStackTrace();
                 }
 
                 ((TextView) v.findViewById(android.R.id.text1)).setText(address);
                 ((TextView) v.findViewById(android.R.id.text2))
                         .setText(LocalDateTime.ofInstant(Instant.ofEpochMilli(model.getTimestampLong()),
-                                ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss")));
+                                ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern(DATETIME_PATTERN)));
             }
 
             @NonNull
@@ -105,7 +108,7 @@ public class MainActivity extends BaseActivity
         recent_locations.setOnItemClickListener((adapterView, view, i, l) ->
         {
             Place place = (Place) adapterView.getItemAtPosition(i);
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=" + place.getLatitude() + "," + place.getLongitude())));
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GEO + place.getLatitude() + COMMA + place.getLongitude())));
         });
     }
 
@@ -126,11 +129,11 @@ public class MainActivity extends BaseActivity
     public void showLocationDialog(View view)
     {
         KAlertDialog locationDialog = new KAlertDialog(this, KAlertDialog.CUSTOM_IMAGE_TYPE);
-        locationDialog.setTitleText("Automatyczna Lokalizacja")
-                .setContentText("Czy chcesz udostępnić swoją obecną lokalizację?")
+        locationDialog.setTitleText(getString(R.string.main_txt_auto_loc))
+                .setContentText(getString(R.string.main_info_share_your_loc))
                 .setCustomImage(R.drawable.location)
-                .setCancelText("Nie")
-                .setConfirmText("Tak")
+                .setCancelText(getString(R.string.main_info_reject))
+                .setConfirmText(getString(R.string.global_txt_yes))
                 .cancelButtonColor(R.color.chestnut_rose)
                 .confirmButtonColor(R.color.success_stroke_color)
                 .setConfirmClickListener(
@@ -139,7 +142,7 @@ public class MainActivity extends BaseActivity
                             Point point = location.getPosition();
                             refPlaces.push().setValue(new Place(auth.getCurrentUser().getUid(), point.latitude, point.longitude))
                                     .addOnSuccessListener(this, task ->
-                                            Toast.makeText(this, "Added your location!", Toast.LENGTH_SHORT).show());
+                                            Toast.makeText(this, R.string.main_txt_added_loc, Toast.LENGTH_SHORT).show());
                         })
                 .show();
         locationDialog.setCanceledOnTouchOutside(true);
@@ -150,14 +153,14 @@ public class MainActivity extends BaseActivity
         KAlertDialog locationDialog = new KAlertDialog(this, KAlertDialog.CUSTOM_IMAGE_TYPE);
         String email = auth.getCurrentUser().getEmail();
         String username = currentUser.getUsername();
-        String accountInfo = "Nazwa użytkownika: " + System.lineSeparator() +
+        String accountInfo = getString(R.string.global_txt_username) + COLON + System.lineSeparator() +
                 username + System.lineSeparator() + System.lineSeparator()
-                + "Adres email: " + System.lineSeparator() + email;
+                + getString(R.string.global_txt_email) + COLON + System.lineSeparator() + email;
         locationDialog.setContentText(accountInfo)
-                .setTitleText("Twoje konto")
+                .setTitleText(getString(R.string.main_txt_your_acc))
                 .setCustomImage(R.drawable.ic_baseline_account_circle_24)
-                .setCancelText("Wyloguj się")
-                .setConfirmText("Ok")
+                .setCancelText(getString(R.string.main_txt_logout))
+                .setConfirmText(getString(R.string.global_txt_ok))
                 .confirmButtonColor(R.color.success_stroke_color)
                 .cancelButtonColor(R.color.chestnut_rose)
                 .setCancelClickListener(kAlertDialog -> showLogoutDialog(view))
@@ -168,10 +171,10 @@ public class MainActivity extends BaseActivity
     public void showLogoutDialog(View view)
     {
         KAlertDialog logoutDialog = new KAlertDialog(this, KAlertDialog.WARNING_TYPE);
-        logoutDialog.setTitleText("Wyloguj się")
-                .setContentText("Czy na pewno chcesz się wylogować?")
-                .setConfirmText("Pozostań z nami")
-                .setCancelText("Wyloguj się")
+        logoutDialog.setTitleText(getString(R.string.main_txt_logout))
+                .setContentText(getString(R.string.main_info_ask_logout))
+                .setConfirmText(getString(R.string.main_txt_stay))
+                .setCancelText(getString(R.string.main_txt_logout))
                 .cancelButtonColor(R.color.chestnut_rose)
                 .confirmButtonColor(R.color.success_stroke_color)
                 .setCancelClickListener(kAlertDialog -> logout(view))
