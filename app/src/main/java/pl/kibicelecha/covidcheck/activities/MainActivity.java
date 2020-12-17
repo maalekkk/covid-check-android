@@ -1,6 +1,9 @@
 package pl.kibicelecha.covidcheck.activities;
 
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
@@ -17,6 +20,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import im.delight.android.location.SimpleLocation.Point;
 import pl.kibicelecha.covidcheck.R;
@@ -61,13 +71,40 @@ public class MainActivity extends BaseActivity
                 .setQuery(refUserPlaces, Place.class)
                 .setLifecycleOwner(this)
                 .build();
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         recent_locations.setAdapter(new FirebaseListAdapter<Place>(options)
         {
             @Override
             protected void populateView(@NonNull View v, @NonNull Place model, int position)
             {
-                ((TextView) v.findViewById(android.R.id.text1)).setText(model.toString());
+                String address;
+                try
+                {
+                    address = geocoder.getFromLocation(model.getLatitude(), model.getLongitude(), 1).get(0).getAddressLine(0);
+                }
+                catch (IOException e)
+                {
+                    address = model.getLatitude() + "," + model.getLongitude();
+                    e.printStackTrace();
+                }
+
+                ((TextView) v.findViewById(android.R.id.text1)).setText(address);
+                ((TextView) v.findViewById(android.R.id.text2))
+                        .setText(LocalDateTime.ofInstant(Instant.ofEpochMilli(model.getTimestampLong()),
+                                ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss")));
             }
+
+            @NonNull
+            @Override
+            public Place getItem(int position)
+            {
+                return super.getItem(getCount() - 1 - position);
+            }
+        });
+        recent_locations.setOnItemClickListener((adapterView, view, i, l) ->
+        {
+            Place place = (Place) adapterView.getItemAtPosition(i);
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=" + place.getLatitude() + "," + place.getLongitude())));
         });
     }
 
