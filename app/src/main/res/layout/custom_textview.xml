@@ -14,7 +14,7 @@
         android:paddingStart="?android:attr/listPreferredItemPaddingStart"
         android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
         android:textAppearance="?android:attr/textAppearanceListItem"
-        android:textColor="@color/cod_gray" />
+        android:textColor="@color/white" />
 
     <TextView
         android:id="@android:id/text2"
@@ -25,5 +25,5 @@
         android:paddingStart="?android:attr/listPreferredItemPaddingStart"
         android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
         android:textAppearance="?android:attr/textAppearanceListItem"
-        android:textColor="@color/cod_gray" />
+        android:textColor="@color/white" />
 </LinearLayout>

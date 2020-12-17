@@ -1,6 +1,5 @@
 package pl.kibicelecha.covidcheck.activities;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -12,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.developer.kalert.KAlertDialog;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseListOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -36,10 +36,9 @@ import pl.kibicelecha.covidcheck.model.User;
 public class MainActivity extends BaseActivity
 {
     private DatabaseReference refPlaces;
-    private Query refUserPlaces;
     private DatabaseReference refUsers;
 
-    private TextView mEmail;
+    private TextView mNickname;
 
     private User currentUser;
 
@@ -48,7 +47,7 @@ public class MainActivity extends BaseActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mEmail = ((TextView) findViewById(R.id.email_home_txt));
+        mNickname = ((TextView) findViewById(R.id.nickname_home_txt));
 
         refUsers = FirebaseDatabase.getInstance().getReference().child(DB_COLLECTION_USERS);
         auth.addAuthStateListener(firebaseAuth ->
@@ -64,7 +63,7 @@ public class MainActivity extends BaseActivity
         });
 
         refPlaces = FirebaseDatabase.getInstance().getReference().child(DB_COLLECTION_PLACE);
-        refUserPlaces = refPlaces.orderByChild("userId").equalTo(auth.getCurrentUser().getUid());
+        Query refUserPlaces = refPlaces.orderByChild("userId").equalTo(auth.getCurrentUser().getUid());
         refUserPlaces.keepSynced(true);
 
         ListView recent_locations = findViewById(R.id.recent_locations_list);
@@ -194,7 +193,7 @@ public class MainActivity extends BaseActivity
             public void onDataChange(@NonNull DataSnapshot snapshot)
             {
                 User user = snapshot.getValue(User.class);
-                mEmail.setText(user.getUsername());
+                mNickname.setText(user.getUsername());
                 currentUser = user;
             }
 
