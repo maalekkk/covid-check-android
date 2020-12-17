@@ -35,15 +35,15 @@ import pl.kibicelecha.covidcheck.model.User;
 
 public class MainActivity extends BaseActivity
 {
+    private static final String USER_ID = "userId";
+    private static final String COMMA = ",";
+    private static final String DATETIME_PATTERN = "hh:mm, dd.MM.yyyy";
+    private static final String GEO = "geo:0,0?q=";
+    private static final String COLON = ": ";
     private DatabaseReference refPlaces;
     private DatabaseReference refUsers;
     private TextView mNickname;
     private User currentUser;
-    private static final String USER_ID = "userId";
-    private static final String COMMA = ",";
-    private static final String DATETIME_PATTERN = "dd-MM-yyyy hh:mm:ss";
-    private static final String GEO = "geo:0,0?q=";
-    private static final String COLON = ": ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -71,7 +71,7 @@ public class MainActivity extends BaseActivity
 
         ListView recent_locations = findViewById(R.id.recent_locations_list);
         FirebaseListOptions<Place> options = new FirebaseListOptions.Builder<Place>()
-                .setLayout(R.layout.custom_textview)
+                .setLayout(R.layout.place_list_row)
                 .setQuery(refUserPlaces, Place.class)
                 .setLifecycleOwner(this)
                 .build();
@@ -143,6 +143,7 @@ public class MainActivity extends BaseActivity
                             refPlaces.push().setValue(new Place(auth.getCurrentUser().getUid(), point.latitude, point.longitude))
                                     .addOnSuccessListener(this, task ->
                                             Toast.makeText(this, R.string.main_txt_added_loc, Toast.LENGTH_SHORT).show());
+                            kAlertDialog.dismissWithAnimation();
                         })
                 .show();
         locationDialog.setCanceledOnTouchOutside(true);
@@ -164,6 +165,7 @@ public class MainActivity extends BaseActivity
                 .confirmButtonColor(R.color.success_stroke_color)
                 .cancelButtonColor(R.color.chestnut_rose)
                 .setCancelClickListener(kAlertDialog -> showLogoutDialog(view))
+                .setConfirmClickListener(KAlertDialog::dismissWithAnimation)
                 .show();
         locationDialog.setCanceledOnTouchOutside(true);
     }
@@ -178,7 +180,7 @@ public class MainActivity extends BaseActivity
                 .cancelButtonColor(R.color.chestnut_rose)
                 .confirmButtonColor(R.color.success_stroke_color)
                 .setCancelClickListener(kAlertDialog -> logout(view))
-                .setConfirmClickListener(kAlertDialog -> logoutDialog.dismissWithAnimation())
+                .setConfirmClickListener(KAlertDialog::dismissWithAnimation)
                 .show();
         logoutDialog.setCanceledOnTouchOutside(true);
     }

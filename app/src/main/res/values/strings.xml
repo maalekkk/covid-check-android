@@ -45,5 +45,5 @@
     <string name="main_txt_your_acc">Your account</string>
     <string name="global_txt_ok">OK</string>
     <string name="main_info_share_your_loc">Do you want to share your current location?</string>
-    <string name="main_info_reject">No, I will indicate it myself</string>
+    <string name="main_info_reject">No, I\'ll indicate it myself</string>
 </resources>
