@@ -1,7 +1,6 @@
 package pl.kibicelecha.covidcheck.activities;
 
 import android.content.Intent;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +8,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 
 import com.developer.kalert.KAlertDialog;
@@ -17,32 +17,27 @@ import com.firebase.ui.database.FirebaseListOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 
-import im.delight.android.location.SimpleLocation.Point;
 import pl.kibicelecha.covidcheck.R;
 import pl.kibicelecha.covidcheck.model.Place;
 import pl.kibicelecha.covidcheck.model.User;
+import pl.kibicelecha.covidcheck.util.GeoProvider;
+import pl.kibicelecha.covidcheck.util.TimeProvider;
 
 public class MainActivity extends BaseActivity
 {
     private static final String USER_ID = "userId";
-    private static final String COMMA = ",";
-    private static final String DATETIME_PATTERN = "hh:mm, dd.MM.yyyy";
+    private static final String DATETIME_PATTERN = "HH:mm, dd.MM.yyyy";
     private static final String GEO = "geo:0,0?q=";
     private static final String COLON = ": ";
     private DatabaseReference refPlaces;
     private DatabaseReference refUsers;
     private TextView mNickname;
+    private GeoProvider geoProvider;
     private User currentUser;
 
     @Override
@@ -50,9 +45,11 @@ public class MainActivity extends BaseActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mNickname = ((TextView) findViewById(R.id.nickname_home_txt));
+        geoProvider = new GeoProvider(getApplicationContext());
+        mNickname = findViewById(R.id.nickname_home_txt);
 
-        refUsers = FirebaseDatabase.getInstance().getReference().child(DB_COLLECTION_USERS);
+        refPlaces = database.getReference().child(DB_COLLECTION_PLACE);
+        refUsers = database.getReference().child(DB_COLLECTION_USERS);
         auth.addAuthStateListener(firebaseAuth ->
         {
             if (auth.getCurrentUser() != null)
@@ -65,65 +62,7 @@ public class MainActivity extends BaseActivity
             }
         });
 
-        refPlaces = FirebaseDatabase.getInstance().getReference().child(DB_COLLECTION_PLACE);
-        Query refUserPlaces = refPlaces.orderByChild(USER_ID).equalTo(auth.getCurrentUser().getUid());
-        refUserPlaces.keepSynced(true);
-
-        ListView recent_locations = findViewById(R.id.recent_locations_list);
-        FirebaseListOptions<Place> options = new FirebaseListOptions.Builder<Place>()
-                .setLayout(R.layout.place_list_row)
-                .setQuery(refUserPlaces, Place.class)
-                .setLifecycleOwner(this)
-                .build();
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        recent_locations.setAdapter(new FirebaseListAdapter<Place>(options)
-        {
-            @Override
-            protected void populateView(@NonNull View v, @NonNull Place model, int position)
-            {
-                String address;
-                try
-                {
-                    address = geocoder.getFromLocation(model.getLatitude(), model.getLongitude(), 1).get(0).getAddressLine(0);
-                }
-                catch (IOException e)
-                {
-                    address = model.getLatitude() + COMMA + model.getLongitude();
-                    e.printStackTrace();
-                }
-
-                ((TextView) v.findViewById(android.R.id.text1)).setText(address);
-                ((TextView) v.findViewById(android.R.id.text2))
-                        .setText(LocalDateTime.ofInstant(Instant.ofEpochMilli(model.getTimestampLong()),
-                                ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern(DATETIME_PATTERN)));
-            }
-
-            @NonNull
-            @Override
-            public Place getItem(int position)
-            {
-                return super.getItem(getCount() - 1 - position);
-            }
-        });
-        recent_locations.setOnItemClickListener((adapterView, view, i, l) ->
-        {
-            Place place = (Place) adapterView.getItemAtPosition(i);
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GEO + place.getLatitude() + COMMA + place.getLongitude())));
-        });
-    }
-
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-        location.beginUpdates();
-    }
-
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-        location.endUpdates();
+        initLocationsList();
     }
 
     public void showLocationDialog(View view)
@@ -139,10 +78,17 @@ public class MainActivity extends BaseActivity
                 .setConfirmClickListener(
                         kAlertDialog ->
                         {
-                            Point point = location.getPosition();
-                            refPlaces.push().setValue(new Place(auth.getCurrentUser().getUid(), point.latitude, point.longitude))
-                                    .addOnSuccessListener(this, task ->
-                                            Toast.makeText(this, R.string.main_txt_added_loc, Toast.LENGTH_SHORT).show());
+                            getLocation();
+                            if (location != null)
+                            {
+                                refPlaces.push().setValue(new Place(auth.getCurrentUser().getUid(), location.getLatitude(), location.getLongitude(), TimeProvider.nowEpoch()))
+                                        .addOnSuccessListener(this, task ->
+                                                Toast.makeText(this, R.string.main_txt_added_loc, Toast.LENGTH_SHORT).show());
+                            }
+                            else
+                            {
+                                Toast.makeText(this, R.string.register_err_sth_wrong, Toast.LENGTH_SHORT).show();
+                            }
                             kAlertDialog.dismissWithAnimation();
                         })
                 .show();
@@ -188,6 +134,43 @@ public class MainActivity extends BaseActivity
     public void logout(View view)
     {
         auth.signOut();
+    }
+
+    private void initLocationsList()
+    {
+        Query refUserPlaces = refPlaces.orderByChild(USER_ID).equalTo(auth.getCurrentUser().getUid());
+        ListView listView = findViewById(R.id.recent_locations_list);
+        FirebaseListOptions<Place> options = new FirebaseListOptions.Builder<Place>()
+                .setLayout(R.layout.place_list_row)
+                .setQuery(refUserPlaces, Place.class)
+                .setLifecycleOwner(this)
+                .build();
+
+        listView.setAdapter(new FirebaseListAdapter<Place>(options)
+        {
+            @Override
+            protected void populateView(@NonNull View v, @NonNull Place model, int position)
+            {
+                String address = geoProvider.getLocationName(model.getLatitude(), model.getLongitude());
+                ((TextView) v.findViewById(android.R.id.text1)).setText(address);
+                ((TextView) v.findViewById(android.R.id.text2))
+                        .setText(TimeProvider.fromEpoch(model.getTimestamp()).format(DateTimeFormatter
+                                .ofPattern(DATETIME_PATTERN)));
+            }
+
+            @NonNull
+            @Override
+            public Place getItem(int position)
+            {
+                return super.getItem(getCount() - 1 - position);
+            }
+        });
+
+        listView.setOnItemClickListener((adapterView, view, i, l) ->
+        {
+            Place place = (Place) adapterView.getItemAtPosition(i);
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GEO + place)));
+        });
     }
 
     private void setCurrentUser()

@@ -7,10 +7,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.FirebaseDatabase;
-
 import pl.kibicelecha.covidcheck.R;
 import pl.kibicelecha.covidcheck.model.User;
+import pl.kibicelecha.covidcheck.util.TimeProvider;
 
 public class RegisterActivity extends BaseActivity
 {
@@ -44,9 +43,9 @@ public class RegisterActivity extends BaseActivity
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener(this, task ->
                 {
-                    FirebaseDatabase.getInstance().getReference(DB_COLLECTION_USERS).child(auth.getUid())
-                            .setValue(new User(username, false));
-                    auth.getCurrentUser().sendEmailVerification();
+                    database.getReference(DB_COLLECTION_USERS).child(auth.getUid())
+                            .setValue(new User(username, false, TimeProvider.nowEpoch()));
+                    //TODO auth.getCurrentUser().sendEmailVerification();
                     Toast.makeText(this, R.string.register_info_email_verification, Toast.LENGTH_SHORT).show();
                     finish();
                 })

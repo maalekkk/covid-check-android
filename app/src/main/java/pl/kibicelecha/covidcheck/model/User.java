@@ -2,17 +2,19 @@ package pl.kibicelecha.covidcheck.model;
 
 public class User
 {
-    String username;
-    boolean infected;
+    private String username;
+    private boolean infected;
+    private Long lastUpdate;
 
     public User()
     {
     }
 
-    public User(String username, boolean infected)
+    public User(String username, boolean infected, Long lastUpdate)
     {
         this.username = username;
         this.infected = infected;
+        this.lastUpdate = lastUpdate;
     }
 
     public String getUsername()
@@ -34,4 +36,15 @@ public class User
     {
         this.infected = infected;
     }
+
+    public Long getLastUpdate()
+    {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Long lastUpdate)
+    {
+        this.lastUpdate = lastUpdate;
+    }
 }
+

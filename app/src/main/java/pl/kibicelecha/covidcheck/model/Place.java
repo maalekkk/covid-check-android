@@ -1,27 +1,24 @@
 package pl.kibicelecha.covidcheck.model;
 
-import com.google.firebase.database.Exclude;
-import com.google.firebase.database.ServerValue;
-
 import java.io.Serializable;
-import java.util.Map;
 
 public class Place implements Serializable
 {
     private String userId;
-    private Double latitude;
-    private Double longitude;
-    private Long timestamp;
+    private double latitude;
+    private double longitude;
+    private long timestamp;
 
     public Place()
     {
     }
 
-    public Place(String userId, Double latitude, Double longitude)
+    public Place(String userId, double latitude, double longitude, long timestamp)
     {
         this.userId = userId;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.timestamp = timestamp;
     }
 
     public String getUserId()
@@ -34,40 +31,34 @@ public class Place implements Serializable
         this.userId = userId;
     }
 
-    public Double getLatitude()
+    public double getLatitude()
     {
         return latitude;
     }
 
-    public void setLatitude(Double latitude)
+    public void setLatitude(double latitude)
     {
         this.latitude = latitude;
     }
 
-    public Double getLongitude()
+    public double getLongitude()
     {
         return longitude;
     }
 
-    public void setLongitude(Double longitude)
+    public void setLongitude(double longitude)
     {
         this.longitude = longitude;
     }
 
-    public Map<String, String> getTimestamp()
-    {
-        return ServerValue.TIMESTAMP;
-    }
-
-    public void setTimestamp(Long timestamp)
-    {
-        this.timestamp = timestamp;
-    }
-
-    @Exclude
-    public Long getTimestampLong()
+    public long getTimestamp()
     {
         return timestamp;
+    }
+
+    public void setTimestamp(long timestamp)
+    {
+        this.timestamp = timestamp;
     }
 
     @Override

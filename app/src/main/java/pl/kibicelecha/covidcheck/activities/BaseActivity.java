@@ -1,50 +1,31 @@
 package pl.kibicelecha.covidcheck.activities;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+import com.yayandroid.locationmanager.base.LocationBaseActivity;
+import com.yayandroid.locationmanager.configuration.Configurations;
+import com.yayandroid.locationmanager.configuration.LocationConfiguration;
 
-import im.delight.android.location.SimpleLocation;
-
-public class BaseActivity extends AppCompatActivity
+public class BaseActivity extends LocationBaseActivity
 {
     protected static final String DB_COLLECTION_USERS = "users";
     protected static final String DB_COLLECTION_PLACE = "places";
-    private static final int TAG_CODE_PERMISSION_LOCATION = 1;
     protected FirebaseAuth auth;
-    protected SimpleLocation location;
+    protected FirebaseDatabase database;
+    protected Location location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         auth.useAppLanguage();
-        location = new SimpleLocation(this);
-
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-        {
-            if (!location.hasLocationEnabled())
-            {
-                SimpleLocation.openSettings(this);
-            }
-        }
-        else
-        {
-            ActivityCompat.requestPermissions(this, new String[]{
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_COARSE_LOCATION},
-                    TAG_CODE_PERMISSION_LOCATION);
-        }
     }
 
     @Override
@@ -66,5 +47,23 @@ public class BaseActivity extends AppCompatActivity
     {
         startActivity(context, activityClass);
         finish();
+    }
+
+    @Override
+    public LocationConfiguration getLocationConfiguration()
+    {
+        return Configurations.defaultConfiguration("rational", "gps");
+    }
+
+    @Override
+    public void onLocationChanged(Location location)
+    {
+        this.location = location;
+    }
+
+    @Override
+    public void onLocationFailed(int type)
+    {
+
     }
 }
