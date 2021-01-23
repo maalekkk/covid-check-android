@@ -33,7 +33,7 @@ public class ResetPwActivity extends BaseActivity
         {
             if (!task.isSuccessful())
             {
-                Toast.makeText(this, R.string.register_err_sth_wrong, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.global_err_sth_wrong, Toast.LENGTH_SHORT).show();
                 return;
             }
 

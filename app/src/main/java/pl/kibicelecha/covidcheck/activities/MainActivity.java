@@ -8,7 +8,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 
 import com.developer.kalert.KAlertDialog;
@@ -67,6 +66,7 @@ public class MainActivity extends BaseActivity
 
     public void showLocationDialog(View view)
     {
+        getLocation();
         KAlertDialog locationDialog = new KAlertDialog(this, KAlertDialog.CUSTOM_IMAGE_TYPE);
         locationDialog.setTitleText(getString(R.string.main_txt_auto_loc))
                 .setContentText(getString(R.string.main_info_share_your_loc))
@@ -78,16 +78,18 @@ public class MainActivity extends BaseActivity
                 .setConfirmClickListener(
                         kAlertDialog ->
                         {
-                            getLocation();
                             if (location != null)
                             {
-                                refPlaces.push().setValue(new Place(auth.getCurrentUser().getUid(), location.getLatitude(), location.getLongitude(), TimeProvider.nowEpoch()))
+                                refPlaces.push().setValue(new Place(auth.getCurrentUser().getUid(),
+                                        location.getLatitude(),
+                                        location.getLongitude(),
+                                        TimeProvider.nowEpoch()))
                                         .addOnSuccessListener(this, task ->
                                                 Toast.makeText(this, R.string.main_txt_added_loc, Toast.LENGTH_SHORT).show());
                             }
                             else
                             {
-                                Toast.makeText(this, R.string.register_err_sth_wrong, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, R.string.global_err_location_null, Toast.LENGTH_LONG).show();
                             }
                             kAlertDialog.dismissWithAnimation();
                         })
@@ -138,7 +140,7 @@ public class MainActivity extends BaseActivity
 
     private void initLocationsList()
     {
-        Query refUserPlaces = refPlaces.orderByChild(USER_ID).equalTo(auth.getCurrentUser().getUid());
+        Query refUserPlaces = refPlaces.orderByChild(USER_ID).equalTo(auth.getCurrentUser().getUid()).limitToLast(10);
         ListView listView = findViewById(R.id.recent_locations_list);
         FirebaseListOptions<Place> options = new FirebaseListOptions.Builder<Place>()
                 .setLayout(R.layout.place_list_row)

@@ -26,7 +26,7 @@
     <string name="login_err_unverified_email">Email jest niezweryfikowany!</string>
     <string name="login_err_required">Wymagane!</string>
     <string name="login_err_invalid_email">Niepoprawny email!</string>
-    <string name="register_err_sth_wrong">Coś poszło nie tak!</string>
+    <string name="global_err_sth_wrong">Coś poszło nie tak!</string>
     <string name="register_info_email_verification">Weryfikacja email została wysłana!</string>
     <string name="register_err_password_same">Hasła muszą się zgadzać!</string>
     <string name="reset_info_email_with_reset">Email z resetowaniem hasła został wysłany!</string>
@@ -42,4 +42,5 @@
     <string name="main_txt_your_acc">Twoje konto</string>
     <string name="global_txt_ok">OK</string>
     <string name="main_info_reject">Nie, wskażę samodzielnie</string>
+    <string name="global_err_location_null">Lokalizacja nie została jeszcze ustalona!</string>
 </resources>

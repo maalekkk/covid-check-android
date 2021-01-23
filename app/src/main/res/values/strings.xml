@@ -31,7 +31,8 @@
     <string name="login_err_unverified_email">Email is not verified!</string>
     <string name="login_err_required">Required!</string>
     <string name="login_err_invalid_email">Invalid email!</string>
-    <string name="register_err_sth_wrong">Something went wrong!</string>
+    <string name="global_err_sth_wrong">Something went wrong!</string>
+    <string name="global_err_location_null">The location has not been established yet!</string>
     <string name="register_info_email_verification">Email verification was sent!</string>
     <string name="register_err_password_same">Password must be the same!</string>
     <string name="reset_info_email_with_reset">Email with reset password was sent!</string>

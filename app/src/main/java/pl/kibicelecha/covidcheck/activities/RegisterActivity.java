@@ -50,7 +50,7 @@ public class RegisterActivity extends BaseActivity
                     finish();
                 })
                 .addOnFailureListener(this, task ->
-                        Toast.makeText(this, R.string.register_err_sth_wrong, Toast.LENGTH_SHORT).show());
+                        Toast.makeText(this, R.string.global_err_sth_wrong, Toast.LENGTH_SHORT).show());
     }
 
     public void backLogin(View view)
