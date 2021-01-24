@@ -43,4 +43,6 @@
     <string name="global_txt_ok">OK</string>
     <string name="main_info_reject">Nie, wskażę samodzielnie</string>
     <string name="global_err_location_null">Lokalizacja nie została jeszcze ustalona!</string>
+    <string name="global_info_ask_gps">Czy chcesz włączyć GPS?</string>
+    <string name="global_info_ask_rational">Czy chcesz to zrobić?</string>
 </resources>

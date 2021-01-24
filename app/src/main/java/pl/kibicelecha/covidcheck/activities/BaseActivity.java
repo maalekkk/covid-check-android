@@ -11,6 +11,8 @@ import com.yayandroid.locationmanager.base.LocationBaseActivity;
 import com.yayandroid.locationmanager.configuration.Configurations;
 import com.yayandroid.locationmanager.configuration.LocationConfiguration;
 
+import pl.kibicelecha.covidcheck.R;
+
 public class BaseActivity extends LocationBaseActivity
 {
     protected static final String DB_COLLECTION_USERS = "users";
@@ -52,7 +54,7 @@ public class BaseActivity extends LocationBaseActivity
     @Override
     public LocationConfiguration getLocationConfiguration()
     {
-        return Configurations.defaultConfiguration("rational", "gps");
+        return Configurations.defaultConfiguration(getString(R.string.global_info_ask_rational), getString(R.string.global_info_ask_gps));
     }
 
     @Override

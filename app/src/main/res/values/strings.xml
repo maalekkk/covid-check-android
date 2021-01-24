@@ -47,4 +47,6 @@
     <string name="global_txt_ok">OK</string>
     <string name="main_info_share_your_loc">Do you want to share your current location?</string>
     <string name="main_info_reject">No, I\'ll indicate it myself</string>
+    <string name="global_info_ask_rational">Do you want to do that?</string>
+    <string name="global_info_ask_gps">Do you want to enable GPS?</string>
 </resources>

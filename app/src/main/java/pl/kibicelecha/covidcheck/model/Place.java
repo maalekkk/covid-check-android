@@ -1,8 +1,6 @@
 package pl.kibicelecha.covidcheck.model;
 
-import java.io.Serializable;
-
-public class Place implements Serializable
+public class Place
 {
     private String userId;
     private double latitude;

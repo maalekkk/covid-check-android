@@ -1,9 +1,11 @@
 package pl.kibicelecha.covidcheck.util;
 
 import android.content.Context;
+import android.location.Address;
 import android.location.Geocoder;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 
 public class GeoProvider
@@ -17,16 +19,20 @@ public class GeoProvider
 
     public String getLocationName(double latitude, double longitude)
     {
-        String address;
+        final String defaultStr = latitude + ", " + longitude;
         try
         {
-            address = geocoder.getFromLocation(latitude, longitude, 1).get(0).getAddressLine(0);
+            List<Address> addressList = geocoder.getFromLocation(latitude, longitude, 1);
+            if (addressList != null && !addressList.isEmpty())
+            {
+                return addressList.get(0).getAddressLine(0);
+            }
+            return defaultStr;
         }
         catch (IOException e)
         {
-            address = latitude + ", " + longitude;
             e.printStackTrace();
+            return defaultStr;
         }
-        return address;
     }
 }

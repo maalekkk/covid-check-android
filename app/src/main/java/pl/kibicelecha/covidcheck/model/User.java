@@ -4,13 +4,13 @@ public class User
 {
     private String username;
     private boolean infected;
-    private Long lastUpdate;
+    private long lastUpdate;
 
     public User()
     {
     }
 
-    public User(String username, boolean infected, Long lastUpdate)
+    public User(String username, boolean infected, long lastUpdate)
     {
         this.username = username;
         this.infected = infected;
@@ -37,12 +37,12 @@ public class User
         this.infected = infected;
     }
 
-    public Long getLastUpdate()
+    public long getLastUpdate()
     {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Long lastUpdate)
+    public void setLastUpdate(long lastUpdate)
     {
         this.lastUpdate = lastUpdate;
     }
