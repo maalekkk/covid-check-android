@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +20,8 @@ import com.google.firebase.database.Query;
 import java.time.format.DateTimeFormatter;
 
 import pl.kibicelecha.covidcheck.R;
-import pl.kibicelecha.covidcheck.model.Place;
+import pl.kibicelecha.covidcheck.model.PlaceSerializable;
+import pl.kibicelecha.covidcheck.module.CovidChecker;
 import pl.kibicelecha.covidcheck.util.GeoProvider;
 import pl.kibicelecha.covidcheck.util.TimeProvider;
 
@@ -29,9 +31,12 @@ public class MainActivity extends BaseActivity
     private static final String DATETIME_PATTERN = "HH:mm, dd.MM.yyyy";
     private static final String GEO = "geo:0,0?q=";
     private static final String COLON = ": ";
+    private static final int RECENT_PLACES_LIMIT = 10;
     private DatabaseReference refPlaces;
     private DatabaseReference refUsers;
+    private CovidChecker covidChecker;
     private GeoProvider geoProvider;
+    private Switch mInfectionSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -39,11 +44,25 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         geoProvider = new GeoProvider(getApplicationContext());
+
+        refPlaces = database.getReference().child(DB_COLLECTION_PLACE);
+        refPlaces.keepSynced(true);
+        refUsers = database.getReference().child(DB_COLLECTION_USERS);
+        refUsers.keepSynced(true);
+        covidChecker = new CovidChecker(auth.getCurrentUser(), refPlaces, refUsers);
+
         TextView mNickname = findViewById(R.id.nickname_home_txt);
         mNickname.setText(auth.getCurrentUser().getDisplayName());
 
-        refPlaces = database.getReference().child(DB_COLLECTION_PLACE);
-        refUsers = database.getReference().child(DB_COLLECTION_USERS);
+        mInfectionSwitch = findViewById(R.id.infection_switch);
+        covidChecker.checkInfectionStatus(mInfectionSwitch);
+        mInfectionSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
+        {
+            if (mInfectionSwitch.isPressed())
+            {
+                covidChecker.switchInfectionStatus(isChecked);
+            }
+        });
 
         auth.addAuthStateListener(firebaseAuth ->
         {
@@ -71,7 +90,7 @@ public class MainActivity extends BaseActivity
                 {
                     if (location != null)
                     {
-                        refPlaces.push().setValue(new Place(auth.getCurrentUser().getUid(),
+                        refPlaces.push().setValue(new PlaceSerializable(auth.getCurrentUser().getUid(),
                                 location.getLatitude(),
                                 location.getLongitude(),
                                 TimeProvider.nowEpoch()))
@@ -131,18 +150,18 @@ public class MainActivity extends BaseActivity
 
     private void initLocationsList()
     {
-        Query refUserPlaces = refPlaces.orderByChild(USER_ID).equalTo(auth.getCurrentUser().getUid()).limitToLast(10);
+        Query refUserPlaces = refPlaces.orderByChild(USER_ID).equalTo(auth.getCurrentUser().getUid()).limitToLast(RECENT_PLACES_LIMIT);
         ListView listView = findViewById(R.id.recent_locations_list);
-        FirebaseListOptions<Place> options = new FirebaseListOptions.Builder<Place>()
+        FirebaseListOptions<PlaceSerializable> options = new FirebaseListOptions.Builder<PlaceSerializable>()
                 .setLayout(R.layout.place_list_row)
-                .setQuery(refUserPlaces, Place.class)
+                .setQuery(refUserPlaces, PlaceSerializable.class)
                 .setLifecycleOwner(this)
                 .build();
 
-        listView.setAdapter(new FirebaseListAdapter<Place>(options)
+        listView.setAdapter(new FirebaseListAdapter<PlaceSerializable>(options)
         {
             @Override
-            protected void populateView(@NonNull View v, @NonNull Place model, int position)
+            protected void populateView(@NonNull View v, @NonNull PlaceSerializable model, int position)
             {
                 String address = geoProvider.getLocationName(model.getLatitude(), model.getLongitude());
                 ((TextView) v.findViewById(android.R.id.text1)).setText(address);
@@ -153,7 +172,7 @@ public class MainActivity extends BaseActivity
 
             @NonNull
             @Override
-            public Place getItem(int position)
+            public PlaceSerializable getItem(int position)
             {
                 return super.getItem(getCount() - 1 - position);
             }
@@ -161,8 +180,8 @@ public class MainActivity extends BaseActivity
 
         listView.setOnItemClickListener((adapterView, view, i, l) ->
         {
-            Place place = (Place) adapterView.getItemAtPosition(i);
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GEO + place)));
+            PlaceSerializable placeSerializable = (PlaceSerializable) adapterView.getItemAtPosition(i);
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GEO + placeSerializable)));
         });
     }
 }

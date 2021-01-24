@@ -1,28 +1,32 @@
 package pl.kibicelecha.covidcheck.model;
 
-public class Place
+public class PlaceSerializable
 {
-    private User user;
+    private String userId;
     private double latitude;
     private double longitude;
     private long timestamp;
 
-    public Place(PlaceSerializable placeSerializable, User user)
+    public PlaceSerializable()
     {
-        this.latitude = placeSerializable.getLatitude();
-        this.longitude = placeSerializable.getLongitude();
-        this.timestamp = placeSerializable.getTimestamp();
-        this.user = user;
     }
 
-    public User getUser()
+    public PlaceSerializable(String userId, double latitude, double longitude, long timestamp)
     {
-        return user;
+        this.userId = userId;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.timestamp = timestamp;
     }
 
-    public void setUser(User user)
+    public String getUserId()
     {
-        this.user = user;
+        return userId;
+    }
+
+    public void setUserId(String userId)
+    {
+        this.userId = userId;
     }
 
     public double getLatitude()
@@ -53,5 +57,11 @@ public class Place
     public void setTimestamp(long timestamp)
     {
         this.timestamp = timestamp;
+    }
+
+    @Override
+    public String toString()
+    {
+        return latitude + ", " + longitude;
     }
 }
