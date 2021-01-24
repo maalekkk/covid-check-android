@@ -73,6 +73,7 @@ public class LoginActivity extends BaseActivity
     {
         boolean valid = true;
 
+        mEmail.setError(null);
         if (TextUtils.isEmpty(email))
         {
             mEmail.setError(getString(R.string.login_err_required));
@@ -83,19 +84,12 @@ public class LoginActivity extends BaseActivity
             mEmail.setError(getString(R.string.login_err_invalid_email));
             valid = false;
         }
-        else
-        {
-            mEmail.setError(null);
-        }
 
+        mPassword.setError(null);
         if (TextUtils.isEmpty(password))
         {
             mPassword.setError(getString(R.string.login_err_required));
             valid = false;
-        }
-        else
-        {
-            mPassword.setError(null);
         }
 
         return valid;

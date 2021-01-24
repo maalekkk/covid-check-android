@@ -49,4 +49,6 @@
     <string name="main_info_reject">No, I\'ll indicate it myself</string>
     <string name="global_info_ask_rational">Do you want to do that?</string>
     <string name="global_info_ask_gps">Do you want to enable GPS?</string>
+    <string name="global_err_no_int_conn">No Internet connection!</string>
+
 </resources>

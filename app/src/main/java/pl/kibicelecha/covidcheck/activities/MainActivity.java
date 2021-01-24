@@ -13,17 +13,13 @@ import androidx.annotation.NonNull;
 import com.developer.kalert.KAlertDialog;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseListOptions;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.time.format.DateTimeFormatter;
 
 import pl.kibicelecha.covidcheck.R;
 import pl.kibicelecha.covidcheck.model.Place;
-import pl.kibicelecha.covidcheck.model.User;
 import pl.kibicelecha.covidcheck.util.GeoProvider;
 import pl.kibicelecha.covidcheck.util.TimeProvider;
 
@@ -35,9 +31,7 @@ public class MainActivity extends BaseActivity
     private static final String COLON = ": ";
     private DatabaseReference refPlaces;
     private DatabaseReference refUsers;
-    private TextView mNickname;
     private GeoProvider geoProvider;
-    private User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -45,17 +39,15 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         geoProvider = new GeoProvider(getApplicationContext());
-        mNickname = findViewById(R.id.nickname_home_txt);
+        TextView mNickname = findViewById(R.id.nickname_home_txt);
+        mNickname.setText(auth.getCurrentUser().getDisplayName());
 
         refPlaces = database.getReference().child(DB_COLLECTION_PLACE);
         refUsers = database.getReference().child(DB_COLLECTION_USERS);
+
         auth.addAuthStateListener(firebaseAuth ->
         {
-            if (auth.getCurrentUser() != null)
-            {
-                setCurrentUser();
-            }
-            else
+            if (firebaseAuth.getCurrentUser() == null)
             {
                 startActivityAndFinish(this, LoginActivity.class);
             }
@@ -75,24 +67,23 @@ public class MainActivity extends BaseActivity
                 .setConfirmText(getString(R.string.global_txt_yes))
                 .cancelButtonColor(R.color.chestnut_rose)
                 .confirmButtonColor(R.color.success_stroke_color)
-                .setConfirmClickListener(
-                        kAlertDialog ->
-                        {
-                            if (location != null)
-                            {
-                                refPlaces.push().setValue(new Place(auth.getCurrentUser().getUid(),
-                                        location.getLatitude(),
-                                        location.getLongitude(),
-                                        TimeProvider.nowEpoch()))
-                                        .addOnSuccessListener(this, task ->
-                                                Toast.makeText(this, R.string.main_txt_added_loc, Toast.LENGTH_SHORT).show());
-                            }
-                            else
-                            {
-                                Toast.makeText(this, R.string.global_err_location_null, Toast.LENGTH_LONG).show();
-                            }
-                            kAlertDialog.dismissWithAnimation();
-                        })
+                .setConfirmClickListener(kAlertDialog ->
+                {
+                    if (location != null)
+                    {
+                        refPlaces.push().setValue(new Place(auth.getCurrentUser().getUid(),
+                                location.getLatitude(),
+                                location.getLongitude(),
+                                TimeProvider.nowEpoch()))
+                                .addOnSuccessListener(this, task ->
+                                        Toast.makeText(this, R.string.main_txt_added_loc, Toast.LENGTH_SHORT).show());
+                    }
+                    else
+                    {
+                        Toast.makeText(this, R.string.global_err_location_null, Toast.LENGTH_LONG).show();
+                    }
+                    kAlertDialog.dismissWithAnimation();
+                })
                 .show();
         locationDialog.setCanceledOnTouchOutside(true);
     }
@@ -101,7 +92,7 @@ public class MainActivity extends BaseActivity
     {
         KAlertDialog locationDialog = new KAlertDialog(this, KAlertDialog.CUSTOM_IMAGE_TYPE);
         String email = auth.getCurrentUser().getEmail();
-        String username = currentUser.getUsername();
+        String username = auth.getCurrentUser().getDisplayName();
         String accountInfo = getString(R.string.global_txt_username) + COLON + System.lineSeparator() +
                 username + System.lineSeparator() + System.lineSeparator()
                 + getString(R.string.global_txt_email) + COLON + System.lineSeparator() + email;
@@ -172,25 +163,6 @@ public class MainActivity extends BaseActivity
         {
             Place place = (Place) adapterView.getItemAtPosition(i);
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GEO + place)));
-        });
-    }
-
-    private void setCurrentUser()
-    {
-        refUsers.child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener()
-        {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot)
-            {
-                User user = snapshot.getValue(User.class);
-                mNickname.setText(user.getUsername());
-                currentUser = user;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error)
-            {
-            }
         });
     }
 }

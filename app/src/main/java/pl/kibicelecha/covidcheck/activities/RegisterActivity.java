@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.UserProfileChangeRequest;
+
 import pl.kibicelecha.covidcheck.R;
 import pl.kibicelecha.covidcheck.model.User;
 import pl.kibicelecha.covidcheck.util.TimeProvider;
@@ -43,6 +45,11 @@ public class RegisterActivity extends BaseActivity
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener(this, task ->
                 {
+                    UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(username)
+                            .build();
+                    auth.getCurrentUser().updateProfile(request);
+
                     database.getReference(DB_COLLECTION_USERS).child(auth.getUid())
                             .setValue(new User(username, false, TimeProvider.nowEpoch()));
                     //TODO auth.getCurrentUser().sendEmailVerification();
@@ -62,16 +69,14 @@ public class RegisterActivity extends BaseActivity
     {
         boolean valid = true;
 
+        mUsername.setError(null);
         if (TextUtils.isEmpty(username))
         {
             mUsername.setError(getString(R.string.login_err_required));
             valid = false;
         }
-        else
-        {
-            mUsername.setError(null);
-        }
 
+        mEmail.setError(null);
         if (TextUtils.isEmpty(email))
         {
             mEmail.setError(getString(R.string.login_err_required));
@@ -82,29 +87,19 @@ public class RegisterActivity extends BaseActivity
             mEmail.setError(getString(R.string.login_err_invalid_email));
             valid = false;
         }
-        else
-        {
-            mEmail.setError(null);
-        }
 
+        mPassword.setError(null);
         if (TextUtils.isEmpty(pass))
         {
             mPassword.setError(getString(R.string.login_err_required));
             valid = false;
         }
-        else
-        {
-            mPassword.setError(null);
-        }
 
+        mPasswordConfirm.setError(null);
         if (!TextUtils.equals(pass, confirmPass))
         {
             mPasswordConfirm.setError(getString(R.string.register_err_password_same));
             valid = false;
-        }
-        else
-        {
-            mPasswordConfirm.setError(null);
         }
 
         return valid;
