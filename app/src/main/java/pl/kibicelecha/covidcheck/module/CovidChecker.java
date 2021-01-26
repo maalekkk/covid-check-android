@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import pl.kibicelecha.covidcheck.model.Place;
 import pl.kibicelecha.covidcheck.model.PlaceSerializable;
@@ -147,14 +148,14 @@ public class CovidChecker
             {
                 Location.distanceBetween(ownPlace.getLatitude(), ownPlace.getLongitude(),
                         otherPlace.getLatitude(), otherPlace.getLongitude(), distance);
-                if (distance[0] <= 10.0 && Math.abs(ownPlace.getTimestamp() - otherPlace.getTimestamp()) < 60)
+                if (distance[0] <= 15.0f && TimeUnit.SECONDS.toMinutes(Math.abs(ownPlace.getTimestamp() - otherPlace.getTimestamp())) < 3)
                 {
                     Toast.makeText(context, "ZAGROŻONY", Toast.LENGTH_LONG).show();
                     return true;
                 }
             }
         }
-        Toast.makeText(context, "NIE ZAGROŻONY", Toast.LENGTH_LONG).show();
+        //Toast.makeText(context, "NIE ZAGROŻONY", Toast.LENGTH_LONG).show();
         return false;
     }
 }
