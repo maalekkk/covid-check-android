@@ -30,101 +30,95 @@
         android:contentDescription="@string/layout_desc_bottom_wave"
         android:src="@drawable/ic_wave1" />
 
-    <LinearLayout
-        android:id="@+id/linear_lay_buttons_bottom"
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
         android:background="@color/mine_shaft"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:paddingBottom="25dp"
+        android:layout_alignParentBottom="true">
 
-        <TableLayout
+        <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="25dp">
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:gravity="center_horizontal">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:gravity="center_horizontal">
+            <ImageView
+                android:id="@+id/date_picker_img"
+                android:layout_width="70dp"
+                android:layout_height="90dp"
+                android:contentDescription="@string/layout_desc_location_icon"
+                android:onClick="showDateDialog"
+                app:srcCompat="@drawable/calendar" />
 
-                <ImageView
-                    android:id="@+id/date_picker_img"
-                    android:layout_width="70dp"
-                    android:layout_height="90dp"
-                    android:contentDescription="@string/layout_desc_location_icon"
-                    android:onClick="showDateDialog"
-                    app:srcCompat="@drawable/calendar" />
+            <Space
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
 
-                <Space
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/time_picker_img"
+                android:layout_width="70dp"
+                android:layout_height="90dp"
+                android:contentDescription="@string/layout_desc_statistics_icon"
+                android:onClick="showTimeDialog"
+                android:src="@drawable/timer" />
 
-                <ImageView
-                    android:id="@+id/time_picker_img"
-                    android:layout_width="70dp"
-                    android:layout_height="90dp"
-                    android:contentDescription="@string/layout_desc_statistics_icon"
-                    android:onClick="showTimeDialog"
-                    android:src="@drawable/timer" />
+            <Space
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
 
-                <Space
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/add_manual_location_img"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/layout_desc_statistics_icon"
+                android:onClick="addLocation"
+                android:src="@drawable/location" />
+        </TableRow>
 
-                <ImageView
-                    android:id="@+id/add_manual_location_img"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_marginTop="8dp"
-                    android:contentDescription="@string/layout_desc_statistics_icon"
-                    android:onClick="addLocation"
-                    android:src="@drawable/location" />
-            </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal">
+            <TextView
+                android:id="@+id/date_picker_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="showDateDialog"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor="@color/white" />
 
-                <TextView
-                    android:id="@+id/date_picker_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textAlignment="center"
-                    android:onClick="showDateDialog"
-                    android:textColor="@color/white" />
+            <Space
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
 
-                <Space
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/time_picker_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="showTimeDialog"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor="@color/white" />
 
-                <TextView
-                    android:id="@+id/time_picker_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textAlignment="center"
-                    android:onClick="showTimeDialog"
-                    android:textColor="@color/white" />
+            <Space
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
 
-                <Space
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/add_manual_location_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="@string/main_txt_add_location"
-                    android:onClick="showTimeDialog"
-                    android:textColor="@color/white" />
-            </TableRow>
-        </TableLayout>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/add_manual_location_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="showTimeDialog"
+                android:text="@string/main_txt_add_location"
+                android:textAlignment="center"
+                android:textColor="@color/white" />
+        </TableRow>
+    </TableLayout>
 </RelativeLayout>

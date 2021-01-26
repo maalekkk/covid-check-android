@@ -5,11 +5,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.developer.kalert.KAlertDialog;
 import com.firebase.ui.database.FirebaseListAdapter;
@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity
     private DatabaseReference refUsers;
     private CovidChecker covidChecker;
     private GeoProvider geoProvider;
-    private Switch mInfectionSwitch;
+    private SwitchCompat mInfectionSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

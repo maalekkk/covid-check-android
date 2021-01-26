@@ -1,8 +1,7 @@
 package pl.kibicelecha.covidcheck.module;
 
-import android.widget.Switch;
-
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -43,12 +42,12 @@ public class CovidChecker
         refCurrentUser.setValue(currentUser);
     }
 
-    public void checkInfectionStatus(Switch infectionSwitch)
+    public void checkInfectionStatus(SwitchCompat infectionSwitch)
     {
         refCurrentUser.addListenerForSingleValueEvent(checkUser(infectionSwitch));
     }
 
-    private ValueEventListener checkUser(Switch infectionSwitch)
+    private ValueEventListener checkUser(SwitchCompat infectionSwitch)
     {
         return new ValueEventListener()
         {
