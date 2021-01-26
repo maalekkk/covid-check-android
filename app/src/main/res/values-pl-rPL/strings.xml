@@ -48,6 +48,6 @@
     <string name="global_err_no_int_conn">Brak połączenia z Internetem!</string>
     <string name="map_info_bad_time">Wybrana godzina jest nieprawidłowa!</string>
     <string name="main_txt_infected">Zarażony</string>
-    <string name="main_txt_helathy">Zdrowy</string>
+    <string name="main_txt_healthy">Zdrowy</string>
     <string name="global_err_location_not_readed">Lokalizacja nie została odczytana!</string>
 </resources>

@@ -77,15 +77,14 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
         {
             localDateTime = localDateTime.withYear(year).withMonth(month + 1).withDayOfMonth(day);
             mDate.setText(getDateAsString(DATE_PATTERN));
-            LocalDateTime now = LocalDateTime.now();
             if (ifFutureTime())
             {
-                localDateTime = localDateTime.withHour(now.getHour()).withMinute(now.getMinute());
+                setTimeToNow();
                 mTime.setText(getDateAsString(TIME_PATTERN));
                 Toast.makeText(this, R.string.map_info_bad_time, Toast.LENGTH_SHORT).show();
             }
         };
-        DatePickerDialog datePickerDialog = new DatePickerDialog(MapActivity.this,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 onDateSetListener,
                 localDateTime.getYear(),
                 localDateTime.getMonthValue(),
@@ -98,19 +97,15 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
     {
         TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, hour, minute) ->
         {
+            localDateTime = localDateTime.withHour(hour).withMinute(minute);
             if (ifFutureTime())
             {
-                LocalDateTime now = LocalDateTime.now();
-                localDateTime = localDateTime.withHour(now.getHour()).withMinute(now.getMinute());
+                setTimeToNow();
                 Toast.makeText(this, R.string.map_info_bad_time, Toast.LENGTH_SHORT).show();
-            }
-            else
-            {
-                localDateTime = localDateTime.withHour(hour).withMinute(minute);
             }
             mTime.setText(getDateAsString(TIME_PATTERN));
         };
-        new TimePickerDialog(MapActivity.this,
+        new TimePickerDialog(this,
                 onTimeSetListener,
                 localDateTime.getHour(),
                 localDateTime.getMinute(),
@@ -125,7 +120,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
                     auth.getCurrentUser().getUid(),
                     latLng.latitude,
                     latLng.longitude,
-                    localDateTime.toEpochSecond(ZoneOffset.UTC)))
+                    TimeProvider.toEpoch(localDateTime)))
                     .addOnSuccessListener(this, task ->
                             Toast.makeText(this,
                                     R.string.main_txt_added_loc,
@@ -142,6 +137,11 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
 
     private boolean ifFutureTime()
     {
-        return TimeProvider.nowEpoch() < localDateTime.toEpochSecond(ZoneOffset.UTC);
+        return localDateTime.isAfter(LocalDateTime.now());
+    }
+
+    private void setTimeToNow() {
+        LocalDateTime now = LocalDateTime.now();
+        localDateTime = localDateTime.withHour(now.getHour()).withMinute(now.getMinute());
     }
 }

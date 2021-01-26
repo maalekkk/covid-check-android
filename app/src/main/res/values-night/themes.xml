@@ -10,7 +10,7 @@
         <item name="colorSecondaryVariant">@color/robins_egg_blue</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/mine_shaft</item>
         <item name="android:windowBackground">@color/cod_gray</item>
         <item name="color">@color/white</item>
         <item name="fontFamily">@font/lato_regular</item>
