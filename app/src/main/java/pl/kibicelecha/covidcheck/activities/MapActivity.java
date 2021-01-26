@@ -39,7 +39,8 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment =
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         refPlaces = database.getReference().child(DB_COLLECTION_PLACE);
@@ -74,7 +75,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
             if (ifFutureTime()) {
                 localDateTime = localDateTime.withHour(now.getHour()).withMinute(now.getMinute());
                 mTime.setText(getDateAsString(TIME_PATTERN));
-                Toast.makeText(this, "Wybrana godzina jest nieprawidłowa!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.map_info_bad_time, Toast.LENGTH_SHORT).show();
             }
         };
         DatePickerDialog datePickerDialog = new DatePickerDialog(MapActivity.this,
