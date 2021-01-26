@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        geoProvider = new GeoProvider(getApplicationContext());
+        geoProvider = new GeoProvider(this);
 
         refPlaces = database.getReference().child(DB_COLLECTION_PLACE);
         refPlaces.keepSynced(true);
@@ -171,8 +171,8 @@ public class MainActivity extends BaseActivity
                 String address = geoProvider.getLocationName(model.getLatitude(), model.getLongitude());
                 ((TextView) v.findViewById(android.R.id.text1)).setText(address);
                 ((TextView) v.findViewById(android.R.id.text2))
-                        .setText(TimeProvider.fromEpoch(model.getTimestamp()).format(DateTimeFormatter
-                                .ofPattern(DATETIME_PATTERN)));
+                        .setText(TimeProvider.fromEpoch(model.getTimestamp())
+                                .format(DateTimeFormatter.ofPattern(DATETIME_PATTERN)));
             }
 
             @NonNull

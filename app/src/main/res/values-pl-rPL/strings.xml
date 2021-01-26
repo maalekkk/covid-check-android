@@ -49,4 +49,5 @@
     <string name="map_info_bad_time">Wybrana godzina jest nieprawidłowa!</string>
     <string name="main_txt_infected">Zarażony</string>
     <string name="main_txt_helathy">Zdrowy</string>
+    <string name="global_err_location_not_readed">Lokalizacja nie została odczytana!</string>
 </resources>

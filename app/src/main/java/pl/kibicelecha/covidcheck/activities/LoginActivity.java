@@ -19,8 +19,8 @@ public class LoginActivity extends BaseActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mEmail = ((TextView) findViewById(R.id.email_log_txt));
-        mPassword = ((TextView) findViewById(R.id.password_log_txt));
+        mEmail = findViewById(R.id.email_log_txt);
+        mPassword = findViewById(R.id.password_log_txt);
     }
 
     @Override

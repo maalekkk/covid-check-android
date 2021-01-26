@@ -25,10 +25,10 @@ public class RegisterActivity extends BaseActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        mUsername = ((TextView) findViewById(R.id.username_registration_txt));
-        mEmail = ((TextView) findViewById(R.id.email_registration_txt));
-        mPassword = ((TextView) findViewById(R.id.password_registration_txt));
-        mPasswordConfirm = ((TextView) findViewById(R.id.password2_registration_txt));
+        mUsername = findViewById(R.id.username_registration_txt);
+        mEmail = findViewById(R.id.email_registration_txt);
+        mPassword = findViewById(R.id.password_registration_txt);
+        mPasswordConfirm = findViewById(R.id.password2_registration_txt);
     }
 
     public void signUp(View view)

@@ -18,7 +18,7 @@ public class ResetPwActivity extends BaseActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_pw);
-        mEmail = ((TextView) findViewById(R.id.email_reset_txt));
+        mEmail = findViewById(R.id.email_reset_txt);
     }
 
     public void resetPassword(View view)
