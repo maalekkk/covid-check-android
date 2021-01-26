@@ -46,4 +46,7 @@
     <string name="global_info_ask_gps">Czy chcesz włączyć GPS?</string>
     <string name="global_info_ask_rational">Czy chcesz to zrobić?</string>
     <string name="global_err_no_int_conn">Brak połączenia z Internetem!</string>
+    <string name="map_info_bad_time">Wybrana godzina jest nieprawidłowa!</string>
+    <string name="main_txt_infected">Zarażony</string>
+    <string name="main_txt_helathy">Zdrowy</string>
 </resources>

@@ -50,5 +50,7 @@
     <string name="global_info_ask_rational">Do you want to do that?</string>
     <string name="global_info_ask_gps">Do you want to enable GPS?</string>
     <string name="global_err_no_int_conn">No Internet connection!</string>
-
+    <string name="map_info_bad_time">The selected time is incorrect!</string>
+    <string name="main_txt_infected">Infected</string>
+    <string name="main_txt_helathy">Healthy</string>
 </resources>

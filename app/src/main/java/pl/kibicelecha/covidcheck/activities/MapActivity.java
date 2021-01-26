@@ -70,26 +70,39 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
         DatePickerDialog.OnDateSetListener onDateSetListener = (datePicker, year, month, day) -> {
             localDateTime = localDateTime.withYear(year).withMonth(month+1).withDayOfMonth(day);
             mDate.setText(getDateAsString(DATE_PATTERN));
+            LocalDateTime now = LocalDateTime.now();
+            if (ifFutureTime()) {
+                localDateTime = localDateTime.withHour(now.getHour()).withMinute(now.getMinute());
+                mTime.setText(getDateAsString(TIME_PATTERN));
+                Toast.makeText(this, "Wybrana godzina jest nieprawidłowa!", Toast.LENGTH_SHORT).show();
+            }
         };
-        new DatePickerDialog(MapActivity.this,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(MapActivity.this,
                 onDateSetListener,
                 localDateTime.getYear(),
                 localDateTime.getMonthValue(),
-                localDateTime.getDayOfMonth())
-                .show();
+                localDateTime.getDayOfMonth());
+        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+        datePickerDialog.show();
     }
 
     public void showTimeDialog(View view) {
         TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, hour, minute) -> {
-            localDateTime = localDateTime.withHour(hour).withMinute(minute);
+            if (ifFutureTime()) {
+                LocalDateTime now = LocalDateTime.now();
+                localDateTime = localDateTime.withHour(now.getHour()).withMinute(now.getMinute());
+                Toast.makeText(this, R.string.map_info_bad_time, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                localDateTime = localDateTime.withHour(hour).withMinute(minute);
+            }
             mTime.setText(getDateAsString(TIME_PATTERN));
         };
         new TimePickerDialog(MapActivity.this,
                 onTimeSetListener,
                 localDateTime.getHour(),
                 localDateTime.getMinute(),
-                true)
-                .show();
+                true).show();
     }
 
     public void addLocation(View view) {
@@ -110,5 +123,9 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
     private String getDateAsString(String pattern) {
         return TimeProvider.fromEpoch(localDateTime.toEpochSecond(ZoneOffset.UTC))
                 .format(DateTimeFormatter.ofPattern(pattern));
+    }
+
+    private boolean ifFutureTime() {
+        return TimeProvider.nowEpoch() < localDateTime.toEpochSecond(ZoneOffset.UTC);
     }
 }

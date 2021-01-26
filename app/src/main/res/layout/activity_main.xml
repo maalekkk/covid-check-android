@@ -108,18 +108,6 @@
                     android:contentDescription="@string/layout_desc_location_icon"
                     android:onClick="showLocationDialog"
                     app:srcCompat="@drawable/location" />
-
-                <Space
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content" />
-
-                <ImageView
-                    android:id="@+id/statistics_img"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:contentDescription="@string/layout_desc_statistics_icon"
-                    android:src="@drawable/stats_icon" />
             </TableRow>
 
             <TableRow
@@ -134,17 +122,6 @@
                     android:text="@string/main_txt_add_location"
                     android:onClick="showLocationDialog"
                     android:textColor="@color/white" />
-
-                <Space
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/show_statistics_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/main_txt_show_statistics"
-                    android:textColor="@color/white" />
             </TableRow>
         </TableLayout>
 
@@ -155,6 +132,14 @@
             android:gravity="center"
             android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_txt_helathy"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:layout_marginEnd="10dp"/>
+
             <Switch
                 android:id="@+id/infection_switch"
                 android:layout_width="wrap_content"
@@ -163,13 +148,20 @@
                 android:layout_margin="10dp"
                 android:gravity="center"
                 android:switchMinWidth="55dp"
-                android:switchPadding="20dp"
-                android:text="@string/main_txt_infection_status"
+                android:switchPadding="22dp"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:thumbTint="@color/chestnut_rose"
                 android:trackTint="@drawable/checker_track"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_txt_infected"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:layout_marginStart="10dp"/>
         </LinearLayout>
     </LinearLayout>
 
