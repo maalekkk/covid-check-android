@@ -60,6 +60,48 @@ public class PlaceSerializable
     }
 
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+
+        PlaceSerializable that = (PlaceSerializable) o;
+
+        if (Double.compare(that.latitude, latitude) != 0)
+        {
+            return false;
+        }
+        if (Double.compare(that.longitude, longitude) != 0)
+        {
+            return false;
+        }
+        if (timestamp != that.timestamp)
+        {
+            return false;
+        }
+        return userId.equals(that.userId);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(latitude);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(longitude);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (timestamp ^ (timestamp >>> 32));
+        return result;
+    }
+
+    @Override
     public String toString()
     {
         return latitude + ", " + longitude;

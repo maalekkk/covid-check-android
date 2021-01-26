@@ -42,4 +42,5 @@ dependencies {
     implementation 'com.yayandroid:LocationManager:2.4.1'
     implementation 'com.github.TutorialsAndroid:KAlertDialog:v4.0.19'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
 }

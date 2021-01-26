@@ -46,10 +46,8 @@ public class MainActivity extends BaseActivity
         geoProvider = new GeoProvider(this);
 
         refPlaces = database.getReference().child(DB_COLLECTION_PLACE);
-        refPlaces.keepSynced(true);
         refUsers = database.getReference().child(DB_COLLECTION_USERS);
-        refUsers.keepSynced(true);
-        covidChecker = new CovidChecker(auth.getCurrentUser(), refPlaces, refUsers);
+        covidChecker = new CovidChecker(this, auth.getCurrentUser(), refUsers);
 
         TextView mNickname = findViewById(R.id.nickname_home_txt);
         mNickname.setText(auth.getCurrentUser().getDisplayName());
@@ -90,7 +88,7 @@ public class MainActivity extends BaseActivity
                 {
                     if (location != null)
                     {
-                        refPlaces.push().setValue(new PlaceSerializable(auth.getCurrentUser().getUid(),
+                        refPlaces.push().setValue(new PlaceSerializable(auth.getUid(),
                                 location.getLatitude(),
                                 location.getLongitude(),
                                 TimeProvider.nowEpoch()))
@@ -155,7 +153,7 @@ public class MainActivity extends BaseActivity
 
     private void initLocationsList()
     {
-        Query refUserPlaces = refPlaces.orderByChild(USER_ID).equalTo(auth.getCurrentUser().getUid()).limitToLast(RECENT_PLACES_LIMIT);
+        Query refUserPlaces = refPlaces.orderByChild(USER_ID).equalTo(auth.getUid()).limitToLast(RECENT_PLACES_LIMIT);
         ListView listView = findViewById(R.id.recent_locations_list);
         FirebaseListOptions<PlaceSerializable> options = new FirebaseListOptions.Builder<PlaceSerializable>()
                 .setLayout(R.layout.place_list_row)

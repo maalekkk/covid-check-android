@@ -7,6 +7,11 @@ public class TimeProvider
 {
     private static final ZoneOffset TIME_ZONE = ZoneOffset.UTC;
 
+    public static LocalDateTime now()
+    {
+        return LocalDateTime.now(TIME_ZONE);
+    }
+
     public static long nowEpoch()
     {
         return LocalDateTime.now().toEpochSecond(TIME_ZONE);

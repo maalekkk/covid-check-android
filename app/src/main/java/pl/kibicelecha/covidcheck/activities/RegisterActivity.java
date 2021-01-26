@@ -50,8 +50,9 @@ public class RegisterActivity extends BaseActivity
                             .build();
                     auth.getCurrentUser().updateProfile(request);
 
-                    database.getReference(DB_COLLECTION_USERS).child(auth.getUid())
-                            .setValue(new User(username, false, TimeProvider.nowEpoch()));
+                    User registeredUser = new User(username, false, TimeProvider.nowEpoch());
+                    registeredUser.setId(auth.getUid());
+                    database.getReference(DB_COLLECTION_USERS).child(auth.getUid()).setValue(registeredUser);
                     //TODO auth.getCurrentUser().sendEmailVerification();
                     Toast.makeText(this, R.string.register_info_email_verification, Toast.LENGTH_SHORT).show();
                     finish();

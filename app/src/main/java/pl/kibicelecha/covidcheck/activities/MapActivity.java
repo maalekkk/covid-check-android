@@ -117,7 +117,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
         if (latLng != null)
         {
             refPlaces.push().setValue(new PlaceSerializable(
-                    auth.getCurrentUser().getUid(),
+                    auth.getUid(),
                     latLng.latitude,
                     latLng.longitude,
                     TimeProvider.toEpoch(localDateTime)))
@@ -140,7 +140,8 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
         return localDateTime.isAfter(LocalDateTime.now());
     }
 
-    private void setTimeToNow() {
+    private void setTimeToNow()
+    {
         LocalDateTime now = LocalDateTime.now();
         localDateTime = localDateTime.withHour(now.getHour()).withMinute(now.getMinute());
     }
