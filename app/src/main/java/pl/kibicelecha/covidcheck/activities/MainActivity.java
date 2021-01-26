@@ -103,6 +103,11 @@ public class MainActivity extends BaseActivity
                     }
                     kAlertDialog.dismissWithAnimation();
                 })
+                .setCancelClickListener(kAlertDialog ->
+                {
+                    startActivity(this, MapActivity.class);
+                    kAlertDialog.dismissWithAnimation();
+                })
                 .show();
         locationDialog.setCanceledOnTouchOutside(true);
     }
