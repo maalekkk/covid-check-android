@@ -29,7 +29,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
 
     private static final String DATE_PATTERN = "dd.MM.yyyy";
     private static final String TIME_PATTERN = "HH:mm";
-    private static final float CAMERA_ZOOM_VALUE = 10.0f;
+    private static final float CAMERA_ZOOM_VALUE = 14.0f;
     private GeoProvider geoProvider;
     private LatLng latLng;
     private TextView mDate;

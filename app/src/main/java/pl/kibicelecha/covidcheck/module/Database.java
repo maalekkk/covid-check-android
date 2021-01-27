@@ -36,12 +36,12 @@ public final class Database
 
     public static DatabaseReference getUsersRef()
     {
-        return getRef().child(DB_COLLECTION_USERS);
+        return getInstance().getReference(DB_COLLECTION_USERS);
     }
 
     public static DatabaseReference getPlacesRef()
     {
-        return getRef().child(DB_COLLECTION_PLACES);
+        return getInstance().getReference(DB_COLLECTION_PLACES);
     }
 
     public static DatabaseReference getUserRef(String userId)
