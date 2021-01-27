@@ -129,7 +129,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
 
     private void checkDateCorrectness(LocalDateTime localDateTime)
     {
-        if (TimeProvider.checkFutureDate(localDateTime))
+        if (TimeProvider.isFutureDate(localDateTime))
         {
             setCurrentTime();
         }
