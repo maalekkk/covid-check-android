@@ -2,7 +2,6 @@ package pl.kibicelecha.covidcheck.module;
 
 import android.content.Context;
 import android.location.Location;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -189,7 +188,6 @@ public class CovidChecker
                 long minutes = minutesBetween(ownPlace.getTimestamp(), otherPlace.getTimestamp());
                 if (distance <= CHECK_DISTANCE && minutes < CHECK_MINUTES)
                 {
-                    Toast.makeText(context, "ZAGROŻONY", Toast.LENGTH_LONG).show();
                     return true;
                 }
             }
