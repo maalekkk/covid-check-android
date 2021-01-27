@@ -33,11 +33,11 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
         android:background="@color/mine_shaft"
         android:gravity="center_horizontal"
-        android:paddingBottom="25dp"
-        android:layout_alignParentBottom="true">
+        android:paddingBottom="25dp">
 
         <TableRow
             android:layout_width="match_parent"

@@ -119,8 +119,8 @@
                     android:id="@+id/add_location_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/main_txt_add_location"
                     android:onClick="showLocationDialog"
+                    android:text="@string/main_txt_add_location"
                     android:textColor="@color/white" />
             </TableRow>
         </TableLayout>
@@ -132,33 +132,33 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="30dp"
-                    android:layout_marginEnd="10dp"
-                    android:text="@string/main_txt_healthy"
-                    android:textColor="@color/white"
-                    android:textAlignment="textEnd"
-                    android:textSize="22sp" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/main_txt_healthy"
+                android:textAlignment="textEnd"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
 
-                <androidx.appcompat.widget.SwitchCompat
-                    app:useMaterialThemeColors="false"
-                    android:id="@+id/infection_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_margin="10dp"
-                    app:switchMinWidth="45dp"
-                    app:trackTint="@drawable/checker_track"
-                    app:thumbTint="@color/chestnut_rose" />
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/infection_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                app:switchMinWidth="45dp"
+                app:thumbTint="@color/chestnut_rose"
+                app:trackTint="@drawable/checker_track"
+                app:useMaterialThemeColors="false" />
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/main_txt_infected"
-                    android:textColor="@color/white"
-                    android:textAlignment="textStart"
-                    android:textSize="22sp" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:text="@string/main_txt_infected"
+                android:textAlignment="textStart"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
