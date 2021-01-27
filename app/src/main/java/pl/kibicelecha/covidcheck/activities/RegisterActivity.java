@@ -11,6 +11,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 import pl.kibicelecha.covidcheck.R;
 import pl.kibicelecha.covidcheck.model.User;
+import pl.kibicelecha.covidcheck.module.Database;
 import pl.kibicelecha.covidcheck.util.TimeProvider;
 
 public class RegisterActivity extends BaseActivity
@@ -52,7 +53,8 @@ public class RegisterActivity extends BaseActivity
 
                     User registeredUser = new User(username, false, TimeProvider.nowEpoch());
                     registeredUser.setId(auth.getUid());
-                    database.getReference(DB_COLLECTION_USERS).child(auth.getUid()).setValue(registeredUser);
+                    Database.getUserRef(auth.getUid()).setValue(registeredUser);
+
                     //TODO auth.getCurrentUser().sendEmailVerification();
                     Toast.makeText(this, R.string.register_info_email_verification, Toast.LENGTH_SHORT).show();
                     finish();

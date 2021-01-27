@@ -5,14 +5,9 @@ import android.location.Location;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SwitchCompat;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDateTime;
@@ -27,51 +22,25 @@ import pl.kibicelecha.covidcheck.util.TimeProvider;
 
 public class CovidChecker
 {
+    private static final long CHECK_MINUTES = 3L;
+    private static final double CHECK_DISTANCE = 15.0;
     private final Context context;
-    private final FirebaseAuth auth = FirebaseAuth.getInstance();
-    private final DatabaseReference refCurrentUser;
     private final List<User> userList = new ArrayList<>();
     private final List<Place> placeList = new ArrayList<>();
     private User currentUser;
 
-    public CovidChecker(Context context, FirebaseUser user, DatabaseReference refUsers)
+    public CovidChecker(Context context, User currentUser)
     {
         this.context = context;
-        this.refCurrentUser = refUsers.child(user.getUid());
-        FirebaseDatabase.getInstance().getReference().addValueEventListener(loadData());
+        this.currentUser = currentUser;
+        Database.getRef().addValueEventListener(loadData());
     }
 
     public void switchInfectionStatus(boolean status)
     {
-        if (currentUser != null)
-        {
-            currentUser.setInfected(status);
-            currentUser.setLastUpdate(TimeProvider.nowEpoch());
-            refCurrentUser.setValue(currentUser);
-        }
-    }
-
-    public void checkInfectionStatus(SwitchCompat infectionSwitch)
-    {
-        refCurrentUser.addListenerForSingleValueEvent(checkUser(infectionSwitch));
-    }
-
-    private ValueEventListener checkUser(SwitchCompat infectionSwitch)
-    {
-        return new ValueEventListener()
-        {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot)
-            {
-                infectionSwitch.setChecked(snapshot.getValue(User.class).isInfected());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error)
-            {
-                System.err.println(error);
-            }
-        };
+        currentUser.setInfected(status);
+        currentUser.setLastUpdate(TimeProvider.nowEpoch());
+        Database.getUserRef(currentUser.getId()).setValue(currentUser);
     }
 
     private ValueEventListener loadData()
@@ -89,7 +58,7 @@ public class CovidChecker
                 });
 
                 userList.stream()
-                        .filter(user -> user.getId().equals(auth.getUid()))
+                        .filter(user -> user.getId().equals(currentUser.getId()))
                         .findFirst()
                         .ifPresent(user -> currentUser = user);
 
@@ -122,7 +91,7 @@ public class CovidChecker
 
     private boolean checkCovid()
     {
-        if (currentUser != null && currentUser.isInfected())
+        if (currentUser == null || currentUser.isInfected())
         {
             return false;
         }
@@ -131,7 +100,7 @@ public class CovidChecker
         List<Place> othersLastPlaces = new ArrayList<>();
         for (Place place : placeList)
         {
-            if (place.getUser().getId().equals(auth.getUid()))
+            if (place.getUser().getId().equals(currentUser.getId()))
             {
                 ownLastPlaces.add(place);
             }
@@ -141,21 +110,35 @@ public class CovidChecker
             }
         }
 
-        float[] distance = new float[3];
         for (Place ownPlace : ownLastPlaces)
         {
             for (Place otherPlace : othersLastPlaces)
             {
-                Location.distanceBetween(ownPlace.getLatitude(), ownPlace.getLongitude(),
-                        otherPlace.getLatitude(), otherPlace.getLongitude(), distance);
-                if (distance[0] <= 15.0f && TimeUnit.SECONDS.toMinutes(Math.abs(ownPlace.getTimestamp() - otherPlace.getTimestamp())) < 3)
+                double distance = distanceBetween(ownPlace.getLatitude(), ownPlace.getLongitude(), otherPlace.getLatitude(), otherPlace.getLongitude());
+                long minutes = minutesBetween(ownPlace.getTimestamp(), otherPlace.getTimestamp());
+                if (distance <= CHECK_DISTANCE && minutes < CHECK_MINUTES)
                 {
                     Toast.makeText(context, "ZAGROŻONY", Toast.LENGTH_LONG).show();
                     return true;
                 }
             }
         }
-        //Toast.makeText(context, "NIE ZAGROŻONY", Toast.LENGTH_LONG).show();
         return false;
+    }
+
+    private double distanceBetween(double x1, double y1, double x2, double y2)
+    {
+        Location first = new Location("first");
+        first.setLatitude(x1);
+        first.setLongitude(y1);
+        Location second = new Location("second");
+        second.setLatitude(x2);
+        second.setLongitude(y2);
+        return first.distanceTo(second);
+    }
+
+    private long minutesBetween(long seconds1, long seconds2)
+    {
+        return TimeUnit.SECONDS.toMinutes(Math.abs(seconds1 - seconds2));
     }
 }

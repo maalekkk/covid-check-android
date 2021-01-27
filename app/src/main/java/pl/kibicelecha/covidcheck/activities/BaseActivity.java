@@ -12,7 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 import com.yayandroid.locationmanager.base.LocationBaseActivity;
 import com.yayandroid.locationmanager.configuration.Configurations;
 import com.yayandroid.locationmanager.configuration.LocationConfiguration;
@@ -21,10 +20,7 @@ import pl.kibicelecha.covidcheck.R;
 
 public class BaseActivity extends LocationBaseActivity
 {
-    protected static final String DB_COLLECTION_USERS = "users";
-    protected static final String DB_COLLECTION_PLACE = "places";
     protected FirebaseAuth auth;
-    protected FirebaseDatabase database;
     protected Location location;
     protected boolean isInternetConnection;
     private ConnectivityManager connectivityManager;
@@ -36,7 +32,6 @@ public class BaseActivity extends LocationBaseActivity
         super.onCreate(savedInstanceState);
         connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         networkCallback = createNetworkCallback();
-        database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         auth.useAppLanguage();
     }

@@ -14,7 +14,6 @@ import androidx.appcompat.widget.SwitchCompat;
 import com.developer.kalert.KAlertDialog;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseListOptions;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
 import java.time.format.DateTimeFormatter;
@@ -22,18 +21,16 @@ import java.time.format.DateTimeFormatter;
 import pl.kibicelecha.covidcheck.R;
 import pl.kibicelecha.covidcheck.model.PlaceSerializable;
 import pl.kibicelecha.covidcheck.module.CovidChecker;
+import pl.kibicelecha.covidcheck.module.Database;
 import pl.kibicelecha.covidcheck.util.GeoProvider;
 import pl.kibicelecha.covidcheck.util.TimeProvider;
 
 public class MainActivity extends BaseActivity
 {
-    private static final String USER_ID = "userId";
     private static final String DATETIME_PATTERN = "HH:mm, dd.MM.yyyy";
     private static final String GEO = "geo:0,0?q=";
     private static final String COLON = ": ";
     private static final int RECENT_PLACES_LIMIT = 10;
-    private DatabaseReference refPlaces;
-    private DatabaseReference refUsers;
     private CovidChecker covidChecker;
     private GeoProvider geoProvider;
     private SwitchCompat mInfectionSwitch;
@@ -43,23 +40,23 @@ public class MainActivity extends BaseActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        geoProvider = new GeoProvider(this);
 
-        refPlaces = database.getReference().child(DB_COLLECTION_PLACE);
-        refUsers = database.getReference().child(DB_COLLECTION_USERS);
-        covidChecker = new CovidChecker(this, auth.getCurrentUser(), refUsers);
-
+        mInfectionSwitch = findViewById(R.id.infection_switch);
         TextView mNickname = findViewById(R.id.nickname_home_txt);
         mNickname.setText(auth.getCurrentUser().getDisplayName());
 
-        mInfectionSwitch = findViewById(R.id.infection_switch);
-        covidChecker.checkInfectionStatus(mInfectionSwitch);
-        mInfectionSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
+        geoProvider = new GeoProvider(this);
+        Database.getCurrentUser(user ->
         {
-            if (mInfectionSwitch.isPressed())
+            covidChecker = new CovidChecker(this, user);
+            mInfectionSwitch.setChecked(user.isInfected());
+            mInfectionSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
             {
-                covidChecker.switchInfectionStatus(isChecked);
-            }
+                if (mInfectionSwitch.isPressed())
+                {
+                    covidChecker.switchInfectionStatus(isChecked);
+                }
+            });
         });
 
         auth.addAuthStateListener(firebaseAuth ->
@@ -88,7 +85,7 @@ public class MainActivity extends BaseActivity
                 {
                     if (location != null)
                     {
-                        refPlaces.push().setValue(new PlaceSerializable(auth.getUid(),
+                        Database.getPlacesRef().push().setValue(new PlaceSerializable(auth.getUid(),
                                 location.getLatitude(),
                                 location.getLongitude(),
                                 TimeProvider.nowEpoch()))
@@ -97,7 +94,7 @@ public class MainActivity extends BaseActivity
                     }
                     else
                     {
-                        Toast.makeText(this, R.string.global_err_location_null, Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, R.string.global_err_location_null, Toast.LENGTH_SHORT).show();
                     }
                     kAlertDialog.dismissWithAnimation();
                 })
@@ -153,23 +150,24 @@ public class MainActivity extends BaseActivity
 
     private void initLocationsList()
     {
-        Query refUserPlaces = refPlaces.orderByChild(USER_ID).equalTo(auth.getUid()).limitToLast(RECENT_PLACES_LIMIT);
+        Query query = Database.getPlacesByUserId(auth.getUid()).limitToLast(RECENT_PLACES_LIMIT);
+
         ListView listView = findViewById(R.id.recent_locations_list);
         FirebaseListOptions<PlaceSerializable> options = new FirebaseListOptions.Builder<PlaceSerializable>()
                 .setLayout(R.layout.place_list_row)
-                .setQuery(refUserPlaces, PlaceSerializable.class)
+                .setQuery(query, PlaceSerializable.class)
                 .setLifecycleOwner(this)
                 .build();
 
         listView.setAdapter(new FirebaseListAdapter<PlaceSerializable>(options)
         {
             @Override
-            protected void populateView(@NonNull View v, @NonNull PlaceSerializable model, int position)
+            protected void populateView(@NonNull View v, @NonNull PlaceSerializable place, int position)
             {
-                String address = geoProvider.getLocationName(model.getLatitude(), model.getLongitude());
+                String address = geoProvider.getLocationName(place.getLatitude(), place.getLongitude());
                 ((TextView) v.findViewById(android.R.id.text1)).setText(address);
                 ((TextView) v.findViewById(android.R.id.text2))
-                        .setText(TimeProvider.fromEpoch(model.getTimestamp())
+                        .setText(TimeProvider.fromEpoch(place.getTimestamp())
                                 .format(DateTimeFormatter.ofPattern(DATETIME_PATTERN)));
             }
 

@@ -13,7 +13,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.database.DatabaseReference;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -21,6 +20,7 @@ import java.time.format.DateTimeFormatter;
 
 import pl.kibicelecha.covidcheck.R;
 import pl.kibicelecha.covidcheck.model.PlaceSerializable;
+import pl.kibicelecha.covidcheck.module.Database;
 import pl.kibicelecha.covidcheck.util.GeoProvider;
 import pl.kibicelecha.covidcheck.util.TimeProvider;
 
@@ -29,7 +29,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
 
     private static final String DATE_PATTERN = "dd.MM.yyyy";
     private static final String TIME_PATTERN = "HH:mm";
-    private DatabaseReference refPlaces;
+    private static final float CAMERA_ZOOM_VALUE = 10.0f;
     private GeoProvider geoProvider;
     private LatLng latLng;
     private TextView mDate;
@@ -45,11 +45,9 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        refPlaces = database.getReference().child(DB_COLLECTION_PLACE);
-        refPlaces.keepSynced(true);
-        geoProvider = new GeoProvider(getApplicationContext());
+        geoProvider = new GeoProvider(this);
+        localDateTime = TimeProvider.now();
 
-        localDateTime = LocalDateTime.now();
         mDate = findViewById(R.id.date_picker_txt);
         mTime = findViewById(R.id.time_picker_txt);
         mDate.setText(getDateAsString(DATE_PATTERN));
@@ -61,11 +59,11 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
     {
         googleMap.setOnMapClickListener(latLng ->
         {
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.position(latLng);
-            markerOptions.title(geoProvider.getLocationName(latLng.latitude, latLng.longitude));
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(latLng)
+                    .title(geoProvider.getLocationName(latLng.latitude, latLng.longitude));
             googleMap.clear();
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, CAMERA_ZOOM_VALUE));
             googleMap.addMarker(markerOptions);
             this.latLng = latLng;
         });
@@ -73,20 +71,14 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
 
     public void showDateDialog(View view)
     {
-        DatePickerDialog.OnDateSetListener onDateSetListener = (datePicker, year, month, day) ->
+        DatePickerDialog.OnDateSetListener listener = (datePicker, year, month, day) ->
         {
             localDateTime = localDateTime.withYear(year).withMonth(month + 1).withDayOfMonth(day);
             mDate.setText(getDateAsString(DATE_PATTERN));
-            if (ifFutureTime())
-            {
-                setTimeToNow();
-                mTime.setText(getDateAsString(TIME_PATTERN));
-                Toast.makeText(this, R.string.map_info_bad_time, Toast.LENGTH_SHORT).show();
-            }
+            checkDateCorrectness(localDateTime);
+            mTime.setText(getDateAsString(TIME_PATTERN));
         };
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                onDateSetListener,
-                localDateTime.getYear(),
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, listener, localDateTime.getYear(),
                 localDateTime.getMonthValue(),
                 localDateTime.getDayOfMonth());
         datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
@@ -95,38 +87,32 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
 
     public void showTimeDialog(View view)
     {
-        TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, hour, minute) ->
+        TimePickerDialog.OnTimeSetListener listener = (timePicker, hour, minute) ->
         {
             localDateTime = localDateTime.withHour(hour).withMinute(minute);
-            if (ifFutureTime())
-            {
-                setTimeToNow();
-                Toast.makeText(this, R.string.map_info_bad_time, Toast.LENGTH_SHORT).show();
-            }
+            checkDateCorrectness(localDateTime);
             mTime.setText(getDateAsString(TIME_PATTERN));
         };
-        new TimePickerDialog(this,
-                onTimeSetListener,
-                localDateTime.getHour(),
-                localDateTime.getMinute(),
-                true).show();
+        new TimePickerDialog(this, listener, localDateTime.getHour(), localDateTime.getMinute(), true).show();
     }
 
     public void addLocation(View view)
     {
         if (latLng != null)
         {
-            refPlaces.push().setValue(new PlaceSerializable(
-                    auth.getUid(),
-                    latLng.latitude,
-                    latLng.longitude,
-                    TimeProvider.toEpoch(localDateTime)))
+            PlaceSerializable place = new PlaceSerializable(auth.getUid(), latLng.latitude, latLng.longitude,
+                    TimeProvider.toEpoch(localDateTime));
+            Database.getPlacesRef().push().setValue(place)
                     .addOnSuccessListener(this, task ->
                             Toast.makeText(this,
                                     R.string.main_txt_added_loc,
                                     Toast.LENGTH_SHORT).show());
+            finish();
         }
-        finish();
+        else
+        {
+            Toast.makeText(this, R.string.global_err_location_null, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private String getDateAsString(String pattern)
@@ -135,14 +121,18 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
                 .format(DateTimeFormatter.ofPattern(pattern));
     }
 
-    private boolean ifFutureTime()
-    {
-        return localDateTime.isAfter(LocalDateTime.now());
-    }
-
     private void setTimeToNow()
     {
         LocalDateTime now = LocalDateTime.now();
         localDateTime = localDateTime.withHour(now.getHour()).withMinute(now.getMinute());
+    }
+
+    private void checkDateCorrectness(LocalDateTime dateTime)
+    {
+        if (dateTime.isAfter(TimeProvider.now()))
+        {
+            setTimeToNow();
+            Toast.makeText(this, R.string.map_info_bad_time, Toast.LENGTH_SHORT).show();
+        }
     }
 }
