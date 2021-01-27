@@ -15,7 +15,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 import pl.kibicelecha.covidcheck.R;
@@ -74,11 +73,12 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
         DatePickerDialog.OnDateSetListener listener = (datePicker, year, month, day) ->
         {
             localDateTime = localDateTime.withYear(year).withMonth(month + 1).withDayOfMonth(day);
-            mDate.setText(getDateAsString(DATE_PATTERN));
             checkDateCorrectness(localDateTime);
+            mDate.setText(getDateAsString(DATE_PATTERN));
             mTime.setText(getDateAsString(TIME_PATTERN));
         };
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, listener, localDateTime.getYear(),
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, listener,
+                localDateTime.getYear(),
                 localDateTime.getMonthValue(),
                 localDateTime.getDayOfMonth());
         datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
@@ -93,14 +93,20 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
             checkDateCorrectness(localDateTime);
             mTime.setText(getDateAsString(TIME_PATTERN));
         };
-        new TimePickerDialog(this, listener, localDateTime.getHour(), localDateTime.getMinute(), true).show();
+        new TimePickerDialog(this, listener,
+                localDateTime.getHour(),
+                localDateTime.getMinute(),
+                true)
+                .show();
     }
 
     public void addLocation(View view)
     {
         if (latLng != null)
         {
-            PlaceSerializable place = new PlaceSerializable(auth.getUid(), latLng.latitude, latLng.longitude,
+            PlaceSerializable place = new PlaceSerializable(auth.getUid(),
+                    latLng.latitude,
+                    latLng.longitude,
                     TimeProvider.toEpoch(localDateTime));
             Database.getPlacesRef().push().setValue(place)
                     .addOnSuccessListener(this, task ->
@@ -111,28 +117,27 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
         }
         else
         {
-            Toast.makeText(this, R.string.global_err_location_null, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.global_err_location_null,
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
     private String getDateAsString(String pattern)
     {
-        return TimeProvider.fromEpoch(localDateTime.toEpochSecond(ZoneOffset.UTC))
-                .format(DateTimeFormatter.ofPattern(pattern));
+        return localDateTime.format(DateTimeFormatter.ofPattern(pattern));
     }
 
-    private void setTimeToNow()
+    private void checkDateCorrectness(LocalDateTime localDateTime)
     {
-        LocalDateTime now = LocalDateTime.now();
-        localDateTime = localDateTime.withHour(now.getHour()).withMinute(now.getMinute());
-    }
-
-    private void checkDateCorrectness(LocalDateTime dateTime)
-    {
-        if (dateTime.isAfter(TimeProvider.now()))
+        if (TimeProvider.checkFutureDate(localDateTime))
         {
-            setTimeToNow();
-            Toast.makeText(this, R.string.map_info_bad_time, Toast.LENGTH_SHORT).show();
+            setCurrentTime();
         }
+    }
+
+    private void setCurrentTime()
+    {
+        localDateTime = TimeProvider.now();
+        Toast.makeText(this, R.string.map_info_bad_time, Toast.LENGTH_SHORT).show();
     }
 }

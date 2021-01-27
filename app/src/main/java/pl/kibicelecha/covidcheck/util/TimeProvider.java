@@ -26,4 +26,9 @@ public class TimeProvider
     {
         return localDateTime.toEpochSecond(TIME_ZONE);
     }
+
+    public static boolean checkFutureDate(LocalDateTime localDateTime)
+    {
+        return localDateTime.isAfter(now());
+    }
 }
