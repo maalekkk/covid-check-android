@@ -5,7 +5,10 @@ import android.location.Location;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
+import com.developer.kalert.KAlertDialog;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -15,10 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import pl.kibicelecha.covidcheck.R;
 import pl.kibicelecha.covidcheck.model.Place;
 import pl.kibicelecha.covidcheck.model.PlaceSerializable;
 import pl.kibicelecha.covidcheck.model.User;
 import pl.kibicelecha.covidcheck.util.TimeProvider;
+
+import static pl.kibicelecha.covidcheck.module.Database.DB_COLLECTION_PLACES;
+import static pl.kibicelecha.covidcheck.module.Database.DB_COLLECTION_USERS;
 
 public class CovidChecker
 {
@@ -26,21 +33,24 @@ public class CovidChecker
     private static final double CHECK_DISTANCE = 15.0;
     private final Context context;
     private final List<User> userList = new ArrayList<>();
-    private final List<Place> placeList = new ArrayList<>();
-    private User currentUser;
+    private final List<Place> ownLastPlaces = new ArrayList<>();
+    private final List<Place> othersLastPlaces = new ArrayList<>();
+    private final User currentUser;
 
     public CovidChecker(Context context, User currentUser)
     {
         this.context = context;
         this.currentUser = currentUser;
         Database.getRef().addValueEventListener(loadData());
+        Database.getUsersRef().addValueEventListener(checkDangerValueListener());
+        Database.getPlacesRef().addChildEventListener(checkDangerChildListener());
     }
 
     public void switchInfectionStatus(boolean status)
     {
         currentUser.setInfected(status);
         currentUser.setLastUpdate(TimeProvider.nowEpoch());
-        Database.getUserRef(currentUser.getId()).setValue(currentUser);
+        Database.getCurrentUserRef().setValue(currentUser);
     }
 
     private ValueEventListener loadData()
@@ -51,34 +61,35 @@ public class CovidChecker
             public void onDataChange(@NonNull DataSnapshot snapshot)
             {
                 userList.clear();
-                snapshot.child("users").getChildren().forEach(dataSnapshot ->
+                snapshot.child(DB_COLLECTION_USERS).getChildren().forEach(dataSnapshot ->
                 {
                     User user = dataSnapshot.getValue(User.class);
                     userList.add(user);
                 });
 
-                userList.stream()
-                        .filter(user -> user.getId().equals(currentUser.getId()))
-                        .findFirst()
-                        .ifPresent(user -> currentUser = user);
-
-                placeList.clear();
-                snapshot.child("places").getChildren().forEach(dataSnapshot ->
+                ownLastPlaces.clear();
+                othersLastPlaces.clear();
+                snapshot.child(DB_COLLECTION_PLACES).getChildren().forEach(dataSnapshot ->
                 {
                     PlaceSerializable placeSerializable = dataSnapshot.getValue(PlaceSerializable.class);
-                    Place place = new Place(placeSerializable, userList.stream()
-                            .filter(user -> user.getId().equals(placeSerializable.getUserId()))
-                            .findFirst()
-                            .orElseThrow(IllegalStateException::new));
+                    User user = new User();
+                    user.setId(placeSerializable.getUserId());
+
+                    Place place = new Place(placeSerializable, userList.get(userList.indexOf(user)));
 
                     LocalDateTime placeTime = TimeProvider.fromEpoch(place.getTimestamp());
                     if (placeTime.isAfter(TimeProvider.now().minusDays(7)))
                     {
-                        placeList.add(place);
+                        if (place.getUser().equals(currentUser))
+                        {
+                            ownLastPlaces.add(place);
+                        }
+                        else
+                        {
+                            othersLastPlaces.add(place);
+                        }
                     }
                 });
-
-                checkCovid();
             }
 
             @Override
@@ -89,25 +100,85 @@ public class CovidChecker
         };
     }
 
-    private boolean checkCovid()
+    private ValueEventListener checkDangerValueListener()
     {
-        if (currentUser == null || currentUser.isInfected())
+        return new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot)
+            {
+                if (isUserInDanger())
+                {
+                    dangerDialog().show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error)
+            {
+                System.err.println(error);
+            }
+        };
+    }
+
+    private ChildEventListener checkDangerChildListener()
+    {
+        return new ChildEventListener()
+        {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName)
+            {
+                if (isUserInDanger())
+                {
+                    dangerDialog().show();
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName)
+            {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot)
+            {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName)
+            {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error)
+            {
+
+            }
+        };
+    }
+
+    private KAlertDialog dangerDialog()
+    {
+        KAlertDialog dangerDialog = new KAlertDialog(context, KAlertDialog.WARNING_TYPE);
+        dangerDialog.setTitleText("Zagrożenie")
+                .setContentText("Wykryliśmy Twój prawdopodobny kontakt z osobą zarażoną koronawirusem!")
+                .showCancelButton(false)
+                .setConfirmText(context.getString(R.string.global_txt_yes))
+                .confirmButtonColor(R.color.success_stroke_color)
+                .show();
+        dangerDialog.setCanceledOnTouchOutside(true);
+        return dangerDialog;
+    }
+
+
+    private boolean isUserInDanger()
+    {
+        if (currentUser.isInfected())
         {
             return false;
-        }
-
-        List<Place> ownLastPlaces = new ArrayList<>();
-        List<Place> othersLastPlaces = new ArrayList<>();
-        for (Place place : placeList)
-        {
-            if (place.getUser().getId().equals(currentUser.getId()))
-            {
-                ownLastPlaces.add(place);
-            }
-            else if (place.getUser().isInfected())
-            {
-                othersLastPlaces.add(place);
-            }
         }
 
         for (Place ownPlace : ownLastPlaces)
@@ -128,10 +199,10 @@ public class CovidChecker
 
     private double distanceBetween(double x1, double y1, double x2, double y2)
     {
-        Location first = new Location("first");
+        Location first = new Location("");
         first.setLatitude(x1);
         first.setLongitude(y1);
-        Location second = new Location("second");
+        Location second = new Location("");
         second.setLatitude(x2);
         second.setLongitude(y2);
         return first.distanceTo(second);

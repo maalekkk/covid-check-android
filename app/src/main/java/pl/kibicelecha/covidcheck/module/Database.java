@@ -14,8 +14,8 @@ import pl.kibicelecha.covidcheck.model.User;
 
 public final class Database
 {
-    private static final String DB_COLLECTION_PLACES = "places";
-    private static final String DB_COLLECTION_USERS = "users";
+    public static final String DB_COLLECTION_PLACES = "places";
+    public static final String DB_COLLECTION_USERS = "users";
     private static final String DB_PLACES_USER_ID = "userId";
     private static FirebaseDatabase database;
 
