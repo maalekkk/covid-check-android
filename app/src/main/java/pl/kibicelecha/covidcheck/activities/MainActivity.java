@@ -209,10 +209,10 @@ public class MainActivity extends BaseActivity
     private KAlertDialog createDangerDialog()
     {
         return new KAlertDialog(this, KAlertDialog.WARNING_TYPE)
-                .setTitleText("Zagrożenie!")
-                .setContentText("Wykryliśmy Twój prawdopodobny kontakt z osobą zarażoną koronawirusem!")
+                .setTitleText(getString(R.string.main_txt_danger))
+                .setContentText(getString(R.string.main_txt_contact_detected))
                 .showCancelButton(false)
-                .setConfirmText("Będę uważał")
+                .setConfirmText(getString(R.string.main_txt_confirm))
                 .confirmButtonColor(R.color.success_stroke_color)
                 .setConfirmClickListener(KAlertDialog::dismissWithAnimation);
     }

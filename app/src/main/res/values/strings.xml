@@ -54,5 +54,8 @@
     <string name="map_info_bad_time">The selected time is incorrect!</string>
     <string name="main_txt_infected">Infected</string>
     <string name="main_txt_healthy">Healthy</string>
-    <string name="main_txt_danger">You are in danger!</string>
+    <string name="main_txt_in_danger">You are in danger!</string>
+    <string name="main_txt_danger">Danger!</string>
+    <string name="main_txt_contact_detected">We detected your possible contact with infected person!</string>
+    <string name="main_txt_confirm">I understood</string>
 </resources>

@@ -50,5 +50,8 @@
     <string name="main_txt_infected">Zarażony</string>
     <string name="main_txt_healthy">Zdrowy</string>
     <string name="global_err_location_not_readed">Lokalizacja nie została odczytana!</string>
-    <string name="main_txt_danger">Jesteś zagrożony!</string>
+    <string name="main_txt_in_danger">Jesteś zagrożony!</string>
+    <string name="main_txt_danger">Zagrożenie!</string>
+    <string name="main_txt_contact_detected">Wykryliśmy Twój prawdopodobny kontakt z osobą zarażoną koronawirusem!</string>
+    <string name="main_txt_confirm">Zrozumiałem</string>
 </resources>

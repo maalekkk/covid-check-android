@@ -22,7 +22,7 @@
         android:textSize="25sp"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
-        android:text="@string/main_txt_danger"
+        android:text="@string/main_txt_in_danger"
         android:visibility="invisible"
         android:textColor="@color/red_btn_bg_color" />
 
