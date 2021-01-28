@@ -27,7 +27,7 @@ public class LoginActivity extends BaseActivity
     protected void onStart()
     {
         super.onStart();
-        if (auth.getCurrentUser() != null)//TODO && auth.getCurrentUser().isEmailVerified())
+        if (auth.getCurrentUser() != null && auth.getCurrentUser().isEmailVerified())
         {
             startActivityAndFinish(this, MainActivity.class);
         }
@@ -45,15 +45,14 @@ public class LoginActivity extends BaseActivity
         auth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener(this, task ->
                 {
-                    //TODO
-                    /*if (auth.getCurrentUser().isEmailVerified())
-                    {*/
-                    startActivityAndFinish(LoginActivity.this, MainActivity.class);
-                    /*}
+                    if (auth.getCurrentUser().isEmailVerified())
+                    {
+                        startActivityAndFinish(LoginActivity.this, MainActivity.class);
+                    }
                     else
                     {
                         Toast.makeText(this, R.string.login_err_unverified_email, Toast.LENGTH_SHORT).show();
-                    }*/
+                    }
                 })
                 .addOnFailureListener(this, task ->
                         Toast.makeText(this, R.string.login_err_invalid_cred, Toast.LENGTH_SHORT).show());

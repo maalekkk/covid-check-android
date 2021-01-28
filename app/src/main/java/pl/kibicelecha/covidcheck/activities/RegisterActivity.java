@@ -55,7 +55,7 @@ public class RegisterActivity extends BaseActivity
                     registeredUser.setId(auth.getUid());
                     Database.getUserRef(auth.getUid()).setValue(registeredUser);
 
-                    //TODO auth.getCurrentUser().sendEmailVerification();
+                    auth.getCurrentUser().sendEmailVerification();
                     Toast.makeText(this, R.string.register_info_email_verification, Toast.LENGTH_SHORT).show();
                     finish();
                 })

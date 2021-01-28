@@ -22,7 +22,6 @@ public class BaseActivity extends LocationBaseActivity
 {
     protected FirebaseAuth auth;
     protected Location location;
-    protected boolean isInternetConnection;
     private ConnectivityManager connectivityManager;
     private NetworkCallback networkCallback;
 
@@ -34,6 +33,16 @@ public class BaseActivity extends LocationBaseActivity
         networkCallback = createNetworkCallback();
         auth = FirebaseAuth.getInstance();
         auth.useAppLanguage();
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        if (auth.getCurrentUser() != null)
+        {
+            auth.getCurrentUser().reload();
+        }
     }
 
     @Override
@@ -69,14 +78,12 @@ public class BaseActivity extends LocationBaseActivity
             public void onAvailable(@NonNull Network network)
             {
                 super.onAvailable(network);
-                isInternetConnection = true;
             }
 
             @Override
             public void onLost(@NonNull Network network)
             {
                 super.onLost(network);
-                isInternetConnection = false;
                 Toast.makeText(getApplicationContext(), R.string.global_err_no_int_conn, Toast.LENGTH_LONG).show();
             }
         };
