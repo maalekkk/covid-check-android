@@ -75,12 +75,16 @@
 
             <TextView
                 android:id="@+id/go_back_reset_password_txt"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:onClick="backLogin"
-                android:text="@string/reset_txt_go_back" />
+                android:text="@string/reset_txt_go_back"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"/>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

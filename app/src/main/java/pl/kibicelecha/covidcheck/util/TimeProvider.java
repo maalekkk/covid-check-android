@@ -1,6 +1,7 @@
 package pl.kibicelecha.covidcheck.util;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 
 public class TimeProvider
@@ -10,6 +11,11 @@ public class TimeProvider
     public static LocalDateTime now()
     {
         return LocalDateTime.now(TIME_ZONE);
+    }
+
+    public static LocalDateTime now(ZoneId zone)
+    {
+        return now().atZone(TIME_ZONE).withZoneSameInstant(zone).toLocalDateTime();
     }
 
     public static long nowEpoch()
@@ -27,8 +33,8 @@ public class TimeProvider
         return localDateTime.toEpochSecond(TIME_ZONE);
     }
 
-    public static boolean isFutureDate(LocalDateTime localDateTime)
+    public static boolean isFutureDate(LocalDateTime localDateTime, ZoneId zone)
     {
-        return localDateTime.isAfter(now());
+        return localDateTime.isAfter(now(zone));
     }
 }

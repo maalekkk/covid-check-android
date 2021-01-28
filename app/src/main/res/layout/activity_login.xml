@@ -74,13 +74,17 @@
 
             <TextView
                 android:id="@+id/forgot_password_log_txt"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="3dp"
                 android:onClick="startResetPw"
-                android:text="@string/login_txt_forgot_password" />
+                android:text="@string/login_txt_forgot_password"
+                android:textSize="17sp"
+                android:textAlignment="center"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"/>
 
             <Button
                 android:id="@+id/sign_in_btn"
@@ -94,12 +98,16 @@
 
             <TextView
                 android:id="@+id/register_log_txt"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:onClick="startRegister"
-                android:text="@string/login_txt_sign_up_redirect" />
+                android:text="@string/login_txt_sign_up_redirect"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp" />
 
         </LinearLayout>
     </ScrollView>

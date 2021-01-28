@@ -15,6 +15,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 import pl.kibicelecha.covidcheck.R;
@@ -29,11 +30,12 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
     private static final String DATE_PATTERN = "dd.MM.yyyy";
     private static final String TIME_PATTERN = "HH:mm";
     private static final float CAMERA_ZOOM_VALUE = 14.0f;
+    private ZoneId zone;
     private GeoProvider geoProvider;
     private LatLng latLng;
+    private LocalDateTime localDateTime;
     private TextView mDate;
     private TextView mTime;
-    private LocalDateTime localDateTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -45,7 +47,8 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         geoProvider = new GeoProvider(this);
-        localDateTime = TimeProvider.now();
+        zone = ZoneId.systemDefault();
+        localDateTime = TimeProvider.now(zone);
 
         mDate = findViewById(R.id.date_picker_txt);
         mTime = findViewById(R.id.time_picker_txt);
@@ -129,7 +132,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
 
     private void checkDateCorrectness(LocalDateTime localDateTime)
     {
-        if (TimeProvider.isFutureDate(localDateTime))
+        if (TimeProvider.isFutureDate(localDateTime, zone))
         {
             setCurrentTime();
         }
@@ -137,7 +140,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback
 
     private void setCurrentTime()
     {
-        localDateTime = TimeProvider.now();
+        localDateTime = TimeProvider.now(zone);
         Toast.makeText(this, R.string.map_info_bad_time, Toast.LENGTH_SHORT).show();
     }
 }
