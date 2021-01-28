@@ -1,11 +1,9 @@
 package pl.kibicelecha.covidcheck.module;
 
-import android.content.Context;
 import android.location.Location;
 
 import androidx.annotation.NonNull;
 
-import com.developer.kalert.KAlertDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -15,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import pl.kibicelecha.covidcheck.R;
 import pl.kibicelecha.covidcheck.model.Place;
 import pl.kibicelecha.covidcheck.model.PlaceSerializable;
 import pl.kibicelecha.covidcheck.model.User;

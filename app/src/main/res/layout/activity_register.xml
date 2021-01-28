@@ -123,11 +123,11 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
                 android:onClick="backLogin"
-                android:text="@string/register_txt_sign_in_redirect"
-                android:textSize="18sp"
-                android:textAlignment="center"
                 android:paddingTop="6dp"
-                android:paddingBottom="6dp"/>
+                android:paddingBottom="6dp"
+                android:text="@string/register_txt_sign_in_redirect"
+                android:textAlignment="center"
+                android:textSize="18sp" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

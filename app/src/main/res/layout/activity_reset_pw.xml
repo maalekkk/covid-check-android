@@ -80,11 +80,11 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:onClick="backLogin"
-                android:text="@string/reset_txt_go_back"
-                android:textSize="18sp"
-                android:textAlignment="center"
                 android:paddingTop="6dp"
-                android:paddingBottom="6dp"/>
+                android:paddingBottom="6dp"
+                android:text="@string/reset_txt_go_back"
+                android:textAlignment="center"
+                android:textSize="18sp" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

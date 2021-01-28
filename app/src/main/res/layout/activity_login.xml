@@ -80,11 +80,11 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="3dp"
                 android:onClick="startResetPw"
-                android:text="@string/login_txt_forgot_password"
-                android:textSize="17sp"
-                android:textAlignment="center"
                 android:paddingTop="6dp"
-                android:paddingBottom="6dp"/>
+                android:paddingBottom="6dp"
+                android:text="@string/login_txt_forgot_password"
+                android:textAlignment="center"
+                android:textSize="17sp" />
 
             <Button
                 android:id="@+id/sign_in_btn"
@@ -103,11 +103,11 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
                 android:onClick="startRegister"
-                android:text="@string/login_txt_sign_up_redirect"
-                android:textSize="18sp"
-                android:textAlignment="center"
                 android:paddingTop="6dp"
-                android:paddingBottom="6dp" />
+                android:paddingBottom="6dp"
+                android:text="@string/login_txt_sign_up_redirect"
+                android:textAlignment="center"
+                android:textSize="18sp" />
 
         </LinearLayout>
     </ScrollView>
