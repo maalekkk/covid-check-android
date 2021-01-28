@@ -29,17 +29,17 @@ public class ResetPwActivity extends BaseActivity
             return;
         }
 
-        auth.sendPasswordResetEmail(email).addOnCompleteListener(this, task ->
-        {
-            if (!task.isSuccessful())
-            {
-                Toast.makeText(this, R.string.global_err_sth_wrong, Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            Toast.makeText(this, R.string.reset_info_email_with_reset, Toast.LENGTH_SHORT).show();
-            finish();
-        });
+        auth.sendPasswordResetEmail(email)
+                .addOnSuccessListener(this, task ->
+                {
+                    Toast.makeText(this, R.string.reset_info_email_with_reset, Toast.LENGTH_SHORT).show();
+                    finish();
+                })
+                .addOnFailureListener(this, e ->
+                {
+                    e.printStackTrace();
+                    Toast.makeText(this, R.string.global_err_sth_wrong, Toast.LENGTH_SHORT).show();
+                });
     }
 
     public void backLogin(View view)

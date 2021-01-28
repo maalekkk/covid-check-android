@@ -20,6 +20,7 @@ import java.time.format.DateTimeFormatter;
 
 import pl.kibicelecha.covidcheck.R;
 import pl.kibicelecha.covidcheck.model.PlaceSerializable;
+import pl.kibicelecha.covidcheck.model.User;
 import pl.kibicelecha.covidcheck.module.CovidChecker;
 import pl.kibicelecha.covidcheck.module.Database;
 import pl.kibicelecha.covidcheck.util.GeoProvider;
@@ -34,6 +35,7 @@ public class MainActivity extends BaseActivity
     private CovidChecker covidChecker;
     private GeoProvider geoProvider;
     private SwitchCompat mInfectionSwitch;
+    private KAlertDialog dangerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -45,11 +47,15 @@ public class MainActivity extends BaseActivity
         TextView mNickname = findViewById(R.id.nickname_home_txt);
         mNickname.setText(auth.getCurrentUser().getDisplayName());
 
+        TextView mDanger = findViewById(R.id.danger_home_txt);
+        dangerDialog = createDangerDialog();
+
         geoProvider = new GeoProvider(this);
         Database.getCurrentUser(user ->
         {
-            covidChecker = new CovidChecker(this, user);
+            covidChecker = new CovidChecker(user);
             mInfectionSwitch.setChecked(user.isInfected());
+            mInfectionSwitch.setEnabled(isChangeStateAvailable(user));
             mInfectionSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
             {
                 if (mInfectionSwitch.isPressed())
@@ -57,6 +63,12 @@ public class MainActivity extends BaseActivity
                     covidChecker.switchInfectionStatus(isChecked);
                 }
             });
+            mDanger.setVisibility(user.isInDanger() ? View.VISIBLE : View.INVISIBLE);
+            if (user.isInDanger() && !dangerDialog.isShowing())
+            {
+                dangerDialog = createDangerDialog();
+                dangerDialog.show();
+            }
         });
 
         auth.addAuthStateListener(firebaseAuth ->
@@ -122,7 +134,11 @@ public class MainActivity extends BaseActivity
                 .setConfirmText(getString(R.string.global_txt_ok))
                 .confirmButtonColor(R.color.success_stroke_color)
                 .cancelButtonColor(R.color.chestnut_rose)
-                .setCancelClickListener(kAlertDialog -> showLogoutDialog(view))
+                .setCancelClickListener(kAlertDialog ->
+                {
+                    showLogoutDialog(view);
+                    kAlertDialog.dismissWithAnimation();
+                })
                 .setConfirmClickListener(KAlertDialog::dismissWithAnimation)
                 .show();
         locationDialog.setCanceledOnTouchOutside(true);
@@ -137,7 +153,11 @@ public class MainActivity extends BaseActivity
                 .setCancelText(getString(R.string.main_txt_logout))
                 .cancelButtonColor(R.color.chestnut_rose)
                 .confirmButtonColor(R.color.success_stroke_color)
-                .setCancelClickListener(kAlertDialog -> logout(view))
+                .setCancelClickListener(kAlertDialog ->
+                {
+                    logout(view);
+                    kAlertDialog.dismissWithAnimation();
+                })
                 .setConfirmClickListener(KAlertDialog::dismissWithAnimation)
                 .show();
         logoutDialog.setCanceledOnTouchOutside(true);
@@ -184,5 +204,21 @@ public class MainActivity extends BaseActivity
             PlaceSerializable placeSerializable = (PlaceSerializable) adapterView.getItemAtPosition(i);
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GEO + placeSerializable)));
         });
+    }
+
+    private KAlertDialog createDangerDialog()
+    {
+        return new KAlertDialog(this, KAlertDialog.WARNING_TYPE)
+                .setTitleText("Zagrożenie!")
+                .setContentText("Wykryliśmy Twój prawdopodobny kontakt z osobą zarażoną koronawirusem!")
+                .showCancelButton(false)
+                .setConfirmText("Będę uważał")
+                .confirmButtonColor(R.color.success_stroke_color)
+                .setConfirmClickListener(KAlertDialog::dismissWithAnimation);
+    }
+
+    private boolean isChangeStateAvailable(User user)
+    {
+        return TimeProvider.fromEpoch(user.getLastUpdate()).isBefore(TimeProvider.now().minusDays(1));
     }
 }

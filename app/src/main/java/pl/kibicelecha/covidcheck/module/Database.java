@@ -25,6 +25,8 @@ public final class Database
         {
             database = FirebaseDatabase.getInstance();
             database.setPersistenceEnabled(true);
+            database.getReference().child(DB_COLLECTION_USERS).keepSynced(true);
+            database.getReference().child(DB_COLLECTION_PLACES).keepSynced(true);
         }
         return database;
     }
@@ -36,12 +38,12 @@ public final class Database
 
     public static DatabaseReference getUsersRef()
     {
-        return getInstance().getReference(DB_COLLECTION_USERS);
+        return getInstance().getReference().child(DB_COLLECTION_USERS);
     }
 
     public static DatabaseReference getPlacesRef()
     {
-        return getInstance().getReference(DB_COLLECTION_PLACES);
+        return getInstance().getReference().child(DB_COLLECTION_PLACES);
     }
 
     public static DatabaseReference getUserRef(String userId)

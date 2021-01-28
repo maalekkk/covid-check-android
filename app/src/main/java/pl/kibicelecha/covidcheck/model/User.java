@@ -7,16 +7,16 @@ public class User
     private String id;
     private String username;
     private boolean infected;
+    private boolean inDanger;
     private long lastUpdate;
 
     public User()
     {
     }
 
-    public User(String username, boolean infected, long lastUpdate)
+    public User(String username, long lastUpdate)
     {
         this.username = username;
-        this.infected = infected;
         this.lastUpdate = lastUpdate;
     }
 
@@ -48,6 +48,16 @@ public class User
     public void setInfected(boolean infected)
     {
         this.infected = infected;
+    }
+
+    public boolean isInDanger()
+    {
+        return inDanger;
+    }
+
+    public void setInDanger(boolean inDanger)
+    {
+        this.inDanger = inDanger;
     }
 
     public long getLastUpdate()

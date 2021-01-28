@@ -4,10 +4,8 @@ import android.content.Context;
 import android.location.Location;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.developer.kalert.KAlertDialog;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -30,24 +28,24 @@ public class CovidChecker
 {
     private static final long CHECK_MINUTES = 3L;
     private static final double CHECK_DISTANCE = 15.0;
-    private final Context context;
     private final List<User> userList = new ArrayList<>();
     private final List<Place> ownLastPlaces = new ArrayList<>();
     private final List<Place> othersLastPlaces = new ArrayList<>();
     private final User currentUser;
 
-    public CovidChecker(Context context, User currentUser)
+    public CovidChecker(User user)
     {
-        this.context = context;
-        this.currentUser = currentUser;
+        this.currentUser = user;
         Database.getRef().addValueEventListener(loadData());
-        Database.getUsersRef().addValueEventListener(checkDangerValueListener());
-        Database.getPlacesRef().addChildEventListener(checkDangerChildListener());
     }
 
     public void switchInfectionStatus(boolean status)
     {
         currentUser.setInfected(status);
+        if (currentUser.isInfected())
+        {
+            currentUser.setInDanger(false);
+        }
         currentUser.setLastUpdate(TimeProvider.nowEpoch());
         Database.getCurrentUserRef().setValue(currentUser);
     }
@@ -83,12 +81,14 @@ public class CovidChecker
                         {
                             ownLastPlaces.add(place);
                         }
-                        else
+                        else if (place.getUser().isInfected())
                         {
                             othersLastPlaces.add(place);
                         }
                     }
                 });
+
+                checkDanger(ownLastPlaces, othersLastPlaces);
             }
 
             @Override
@@ -99,83 +99,19 @@ public class CovidChecker
         };
     }
 
-    private ValueEventListener checkDangerValueListener()
+    private void checkDanger(List<Place> ownLastPlaces, List<Place> othersLastPlaces)
     {
-        return new ValueEventListener()
+        boolean inDanger = isUserInDanger(currentUser, ownLastPlaces, othersLastPlaces);
+        if (currentUser.isInDanger() != inDanger)
         {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot)
-            {
-                if (isUserInDanger())
-                {
-                    dangerDialog().show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error)
-            {
-                System.err.println(error);
-            }
-        };
+            currentUser.setInDanger(inDanger);
+            Database.getCurrentUserRef().setValue(currentUser);
+        }
     }
 
-    private ChildEventListener checkDangerChildListener()
+    private boolean isUserInDanger(User user, List<Place> ownLastPlaces, List<Place> othersLastPlaces)
     {
-        return new ChildEventListener()
-        {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName)
-            {
-                if (isUserInDanger())
-                {
-                    dangerDialog().show();
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName)
-            {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot)
-            {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName)
-            {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error)
-            {
-
-            }
-        };
-    }
-
-    private KAlertDialog dangerDialog()
-    {
-        KAlertDialog dangerDialog = new KAlertDialog(context, KAlertDialog.WARNING_TYPE);
-        dangerDialog.setTitleText("Zagrożenie")
-                .setContentText("Wykryliśmy Twój prawdopodobny kontakt z osobą zarażoną koronawirusem!")
-                .showCancelButton(false)
-                .setConfirmText(context.getString(R.string.global_txt_yes))
-                .confirmButtonColor(R.color.success_stroke_color)
-                .show();
-        dangerDialog.setCanceledOnTouchOutside(true);
-        return dangerDialog;
-    }
-
-
-    private boolean isUserInDanger()
-    {
-        if (currentUser.isInfected())
+        if (user.isInfected())
         {
             return false;
         }
@@ -186,7 +122,7 @@ public class CovidChecker
             {
                 double distance = distanceBetween(ownPlace.getLatitude(), ownPlace.getLongitude(), otherPlace.getLatitude(), otherPlace.getLongitude());
                 long minutes = minutesBetween(ownPlace.getTimestamp(), otherPlace.getTimestamp());
-                if (distance <= CHECK_DISTANCE && minutes < CHECK_MINUTES)
+                if (distance <= CHECK_DISTANCE && minutes <= CHECK_MINUTES)
                 {
                     return true;
                 }

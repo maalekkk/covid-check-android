@@ -51,7 +51,7 @@ public class RegisterActivity extends BaseActivity
                             .build();
                     auth.getCurrentUser().updateProfile(request);
 
-                    User registeredUser = new User(username, false, TimeProvider.nowEpoch());
+                    User registeredUser = new User(username, TimeProvider.nowEpoch());
                     registeredUser.setId(auth.getUid());
                     Database.getUserRef(auth.getUid()).setValue(registeredUser);
 
@@ -59,8 +59,11 @@ public class RegisterActivity extends BaseActivity
                     Toast.makeText(this, R.string.register_info_email_verification, Toast.LENGTH_SHORT).show();
                     finish();
                 })
-                .addOnFailureListener(this, task ->
-                        Toast.makeText(this, R.string.global_err_sth_wrong, Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(this, e ->
+                {
+                    e.printStackTrace();
+                    Toast.makeText(this, R.string.global_err_sth_wrong, Toast.LENGTH_SHORT).show();
+                });
     }
 
     public void backLogin(View view)

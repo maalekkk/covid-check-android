@@ -14,6 +14,18 @@
         android:scaleType="fitStart"
         android:src="@drawable/ic_wave2" />
 
+    <TextView
+        android:id="@+id/danger_home_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="25sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:text="@string/main_txt_danger"
+        android:visibility="invisible"
+        android:textColor="@color/red_btn_bg_color" />
+
     <TableRow
         android:id="@+id/profile_row"
         android:layout_width="wrap_content"
