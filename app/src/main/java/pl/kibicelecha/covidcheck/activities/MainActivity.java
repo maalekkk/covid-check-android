@@ -20,7 +20,6 @@ import java.time.format.DateTimeFormatter;
 
 import pl.kibicelecha.covidcheck.R;
 import pl.kibicelecha.covidcheck.model.PlaceSerializable;
-import pl.kibicelecha.covidcheck.model.User;
 import pl.kibicelecha.covidcheck.module.CovidChecker;
 import pl.kibicelecha.covidcheck.module.Database;
 import pl.kibicelecha.covidcheck.util.GeoProvider;
@@ -55,7 +54,6 @@ public class MainActivity extends BaseActivity
         {
             covidChecker = new CovidChecker(user);
             mInfectionSwitch.setChecked(user.isInfected());
-            mInfectionSwitch.setEnabled(isChangeStateAvailable(user));
             mInfectionSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
             {
                 if (mInfectionSwitch.isPressed())
@@ -215,10 +213,5 @@ public class MainActivity extends BaseActivity
                 .setConfirmText(getString(R.string.main_txt_confirm))
                 .confirmButtonColor(R.color.success_stroke_color)
                 .setConfirmClickListener(KAlertDialog::dismissWithAnimation);
-    }
-
-    private boolean isChangeStateAvailable(User user)
-    {
-        return TimeProvider.fromEpoch(user.getLastUpdate()).isBefore(TimeProvider.now().minusDays(1));
     }
 }
